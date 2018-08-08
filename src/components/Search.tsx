@@ -12,7 +12,7 @@ interface IState {
 
 class AccessToken extends React.Component<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
-        userToken: 'BQAJIYSLJXgB4zoDUZiyuypxFsxfQvqwu-xe8Z9ZeteCfCtDwX5-1HkLyl24CSeOR6HghFgeXP-POb0YdTNJ1Yj6moEZa0F2ZRY6TKgsMY4qhdncKbfQvxhJ4XkRGI5HFsMoIA_4D-JlfF0BBg'
+        userToken: 'BQBw3-HSFX3QgQ8DL_7Tm9z_YAV-4yDN4T3dMIxMp7_J3AokUf9U5WeF-kXPcTvSsAhPAU5vwO8AVZcg1aKa2z7v6U5MbAEyxJnYKadn0Hqp3FMmd7mMUz1UyrymvT5K9Ixnb-HS7uHby_Ny7w'
     }
 
     constructor(props: IProps) {
