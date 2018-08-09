@@ -31,17 +31,17 @@ class AccessToken extends React.Component<IProps, IState> {
     }
 
     public render() {
-    return (
-        <div className="hello">
-        <form onSubmit={this.onSubmit}>
-            <label>
-            Enter user access token:
-            <input type="text" name="userToken" placeholder={this.props.userToken} onChange={this.updateInput} />
-            </label>
-            <input type="submit" value="Submit" />
-        </form>
-        </div>
-    );
+        return (
+            <div className="hello">
+            <form onSubmit={this.onSubmit}>
+                <label>
+                Enter user access token:
+                <input type="text" name="userToken" placeholder={this.props.userToken} onChange={this.updateInput} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+            </div>
+        );
     }
 }
 

@@ -12,6 +12,7 @@ interface IProps {
     client: SpotifyWebApi.SpotifyWebApiJs;
     visible: boolean;
     onSearchResults: (artists: SpotifyApi.ArtistObjectFull[]) => void;
+    onError: (e: any) => void;
 }
 
 class ArtistSearch extends React.Component<IProps, IState> {
@@ -27,7 +28,13 @@ class ArtistSearch extends React.Component<IProps, IState> {
         e.preventDefault()
         const artistList = this.state.artistList;
         // const searchArtists = this.props.client.searchArtists;
-        const results = await Promise.all(artistList.map(async (a) => this.search(a)));
+        let results;
+         try {
+           results = await Promise.all(artistList.map(async (a) => this.search(a)));
+        } catch(e) {
+            this.props.onError(e)
+            return;
+        }
         // tslint:disable-next-line:no-console
         console.log('results', results);
         this.setState({artistModels: results})
@@ -53,7 +60,15 @@ class ArtistSearch extends React.Component<IProps, IState> {
     );
     }
 
-    private search = async (artist: string) => (await this.props.client.searchArtists(artist, {})).artists.items[0];
+    private search = async (artist: string) => {
+        try {
+            return (await this.props.client.searchArtists(artist, {})).artists.items[0]
+        } catch(e) {
+            // tslint:disable-next-line:no-console
+            console.log('error requesting artists',e);
+            throw e;
+        }
+    };
     
 }
 
