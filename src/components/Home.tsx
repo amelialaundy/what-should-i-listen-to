@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as SpotifyWebApi from 'spotify-web-api-js'
+// import * as SpotifyWebApi from 'spotify-web-api-js'
 
 import '../App.css';
 
 import {IQueryAttribute} from '../Attributes'
-import {InitiateSpotify} from '../helpers/Spotify'
+import {Spotify} from '../helpers/Spotify'
 import ArtistSearch from './ArtistSearch';
 import QueryAttributes from './QueryAttributes';
 
@@ -18,7 +18,8 @@ export interface IState {
 }
 
 class Home extends React.Component<any, IState> {
-  private spotifiyClient: SpotifyWebApi.SpotifyWebApiJs;
+  private spotify: Spotify;
+  // private spotifiyClient: SpotifyWebApi.SpotifyWebApiJs;
   private loginUrl: string = "https://accounts.spotify.com/authorize?client_id=760467e647f4408dab802bd3f3d7a82e&redirect_uri=http:%2F%2Flocalhost:3000%2Fcallback&scope=user-read-private%20user-read-email&response_type=token&state=123";
 
   constructor(props: any) {
@@ -30,29 +31,21 @@ class Home extends React.Component<any, IState> {
   }
 
   public initSpotify = (token: string) => {
-    this.spotifiyClient = InitiateSpotify(token);
+    this.spotify = new Spotify(token);
   }
 
-  public updateArtistIds = (artists: SpotifyApi.ArtistObjectFull[]) => {
-    const artistsIds = artists.map(a => a.id);
-    this.setState({artistsIds})
+  public getArtistIds = async (artists: string[]) => {
+    const artistsIds = (await this.spotify.searchArtists(artists)).map(r => r.id);
+    const opts = this.state.searchOptions;
+    opts.seed_artists = artistsIds.join(',')
+    this.setState({artistsIds, searchOptions: opts})
   }
 
-  public getRecommendations = async () =>{
-    const search: SpotifyApi.RecommendationsOptionsObject = {
-      seed_artists: this.state.artistsIds.join(','),
-    }
-    const options = this.state.searchOptions;
-    Object.keys(options).map(k => {
-      const val = options[k];
-      if (val) {
-        search[k] = val;
-      }
-    })
+  public getRecommendations = async () => {
     try {
-      const recommendations = await this.spotifiyClient.getRecommendations(search);
-      this.setState({recommendations})
-    } catch(e) {
+      const recommendations = await this.spotify.getRecommendations(this.state.searchOptions);
+      this.setState({ recommendations })
+    } catch (e) {
       // tslint:disable-next-line:no-console
       console.log('e', e)
       this.onError(e);
@@ -76,7 +69,7 @@ class Home extends React.Component<any, IState> {
   public spotifyReady = () => {
     return (
       <div>
-        <ArtistSearch visible={this.state.initiated} client={this.spotifiyClient} onSearchResults={this.updateArtistIds} onError={this.onError}/>
+        <ArtistSearch visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError}/>
         <QueryAttributes onChange={this.attributesOnChange}/>
         <div>
           <button onClick={this.getRecommendations} disabled={this.state.artistsIds.length < 1}>recommend!</button>
@@ -90,7 +83,7 @@ class Home extends React.Component<any, IState> {
     return (
       <div>
         <ul>
-          {recs.tracks.map(t => (<p><a href={t.external_urls.spotify}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a></p>))}
+          {recs.tracks.map(t => (<p key={t.id}><a href={t.external_urls.spotify}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a></p>))}
         </ul>
       </div>
     )
