@@ -23,8 +23,8 @@ class QueryAttributes extends React.Component<IProps, IState> {
 
     public getAttribute = (attribute: IQueryAttribute) => {
         return (
-            <div className='attribute-container' key={attribute.name}>
-                <p className={'attribute-name'}>{attribute.displayName}</p>
+            <div className='info-container' key={attribute.name}>
+                <p className='attribute-name'>{attribute.displayName}</p>
                 <input className='attribute-value'
                     type="number" 
                     step={attribute.step}
@@ -38,10 +38,8 @@ class QueryAttributes extends React.Component<IProps, IState> {
     }
     public render() {
         return (
-            <div className="hello">
-                <ul>
+            <div className="type-container attributes">
                     {this.state.attributes.map(this.getAttribute)}
-                </ul>
             </div>
         );
     }

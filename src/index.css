@@ -24,6 +24,48 @@ pre code {
   padding: 8px 0;
 }
 
+
+.grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(5, [col] auto ) ;
+  grid-template-rows: repeat(6, [row] auto  );
+  background-color: #fff;
+  color: #444;
+}
+
+.type-container {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  /* font-size: 150%; */
+}
+
+.artist {
+  grid-column: col / span 5;
+  grid-row: row 1;
+}
+.genre {
+  grid-column: col / span 5;
+  grid-row: row 2;
+}
+
+.attributes {
+  grid-column: col 1 / span 5;
+  grid-row: row 3;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* .info-container {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: row1-start;
+  grid-row-end: 3;
+} */
+
 .attribute {
   float: left;
 }
@@ -31,11 +73,17 @@ pre code {
 .attribute-container {
   overflow: auto;
   margin-bottom: 10%;
+  grid-template-columns: 40px 50px auto 50px 40px;
+  grid-template-rows: 25% 100px auto
 }
 
 .attribute-name {
-  float: left;
-  width: 40%;
+  /* float: left;
+  width: 40%; */
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: row1-start;
+  grid-row-end: 3;
 }
 .attribute-value {
   float: left;
@@ -78,7 +126,7 @@ pre code {
   outline: none;
   padding: 8px 52px 8px 10px;
   transition: all 200ms ease;
-  width: 50%;
+  width: 20%;
   margin: auto;
   
 }

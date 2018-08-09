@@ -46,7 +46,7 @@ class GenreSearch extends React.Component<IProps, IState> {
        const className = 'my-custom-class'
         const defaultOption = this.state.genreToSearch ? {label: this.state.genreToSearch, value: this.state.genreToSearch} : options[0];
         return (
-            <div className="hello">
+            <div className="type-container genre">
             <form onSubmit={this.onSubmit}>
                 <label>
                 Enter a genre name:

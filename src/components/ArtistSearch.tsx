@@ -34,13 +34,13 @@ class ArtistSearch extends React.Component<IProps, IState> {
     public render() {
         const artists = this.mapArtistListForDisplay();
     return (
-        <div className="hello">
+        <div className="type-container artist">
         <form onSubmit={this.onSubmit}>
             <label>
             Enter up to 5 artist names seperated by a comma:
-            <br/>
-            <input className={'artistSearch'} type="text" name="artistList" placeholder={artists} onChange={this.updateInput} />
             </label>
+            <input className={'artistSearch'} type="text" name="artistList" placeholder={artists} onChange={this.updateInput} />
+            
             <br/>
             <input className={'artistButton'} type="submit" value="Add artists to search" />
         </form>
