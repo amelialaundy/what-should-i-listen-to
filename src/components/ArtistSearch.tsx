@@ -15,7 +15,7 @@ interface IProps {
 class ArtistSearch extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
-        this.state = { artistList: ['Heartless Bastards', 'Rumspringa']}
+        this.state = { artistList: []}
     }
 
     public updateInput = (event: any) => {
@@ -38,9 +38,11 @@ class ArtistSearch extends React.Component<IProps, IState> {
         <form onSubmit={this.onSubmit}>
             <label>
             Enter up to 5 artist names seperated by a comma:
-            <input type="text" name="artistList" placeholder={artists} onChange={this.updateInput} />
+            <br/>
+            <input className={'artistSearch'} type="text" name="artistList" placeholder={artists} onChange={this.updateInput} />
             </label>
-            <input type="submit" value="Add artists to search" />
+            <br/>
+            <input className={'artistButton'} type="submit" value="Add artists to search" />
         </form>
         </div>
     );

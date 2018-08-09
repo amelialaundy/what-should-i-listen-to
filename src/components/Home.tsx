@@ -6,6 +6,7 @@ import '../App.css';
 import {IQueryAttribute} from '../Attributes'
 import {Spotify} from '../helpers/Spotify'
 import ArtistSearch from './ArtistSearch';
+import GenreSearch from './GenreSearch';
 import QueryAttributes from './QueryAttributes';
 
 export interface IState {
@@ -15,12 +16,12 @@ export interface IState {
   token?: string;
   recommendations?: SpotifyApi.RecommendationsFromSeedsResponse;
   searchOptions: SpotifyApi.RecommendationsOptionsObject;
+  genres?: string[];
 }
 
 class Home extends React.Component<any, IState> {
   private spotify: Spotify;
-  // private spotifiyClient: SpotifyWebApi.SpotifyWebApiJs;
-  private loginUrl: string = "https://accounts.spotify.com/authorize?client_id=760467e647f4408dab802bd3f3d7a82e&redirect_uri=http:%2F%2Flocalhost:3000%2Fcallback&scope=user-read-private%20user-read-email&response_type=token&state=123";
+  private loginUrl: string = "https://accounts.spotify.com/authorize?client_id=760467e647f4408dab802bd3f3d7a82e&redirect_uri=http:%2F%2F192.168.178.49:3000%2Fcallback&scope=user-read-private%20user-read-email&response_type=token&state=123";
 
   constructor(props: any) {
     super(props)
@@ -34,6 +35,12 @@ class Home extends React.Component<any, IState> {
     this.spotify = new Spotify(token);
   }
 
+  public componentDidMount() {
+    if (this.state.initiated) {
+      this.getGenres()
+    }
+  }
+
   public getArtistIds = async (artists: string[]) => {
     const artistsIds = (await this.spotify.searchArtists(artists)).map(r => r.id);
     const opts = this.state.searchOptions;
@@ -41,6 +48,16 @@ class Home extends React.Component<any, IState> {
     this.setState({artistsIds, searchOptions: opts})
   }
 
+
+  public getGenres = async () => {
+    const genres = await this.spotify.getGenres();
+    this.setState({genres})
+  }
+  public saveGenre = (genre: string) => {
+    const options = this.state.searchOptions;
+    options.seed_genres = genre;
+    this.setState({searchOptions: options})
+  }
   public getRecommendations = async () => {
     try {
       const recommendations = await this.spotify.getRecommendations(this.state.searchOptions);
@@ -66,19 +83,27 @@ class Home extends React.Component<any, IState> {
     this.setState({searchOptions: options})
   }
 
-  public spotifyReady = () => {
+  public validateSearch = () => {
+    const options = this.state.searchOptions;
+    const hasGenre = options.seed_genres ? true : false;
+    const hasArtist = options.seed_artists ? true : false;
+    return hasGenre || hasArtist;
+  }
+
+  public showSearch = () => {
     return (
       <div>
         <ArtistSearch visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError}/>
+        <GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} genreList={this.state.genres as string []} onError={this.onError}/>
         <QueryAttributes onChange={this.attributesOnChange}/>
         <div>
-          <button onClick={this.getRecommendations} disabled={this.state.artistsIds.length < 1}>recommend!</button>
+          <button onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>
         </div>
       </div>
     )
   }
 
-  public results = () => {
+  public showRecommendationResults = () => {
     const recs = this.state.recommendations as SpotifyApi.RecommendationsFromSeedsResponse;
     return (
       <div>
@@ -93,8 +118,8 @@ class Home extends React.Component<any, IState> {
     return (
       <div className="App">
         {!this.state.initiated && <a href={this.loginUrl}>Log in to Spotify</a>}
-        {this.state.initiated && this.spotifyReady()}
-        {this.state.recommendations && this.results()}
+        {this.state.initiated && this.showSearch()}
+        {this.state.recommendations && this.showRecommendationResults()}
         
       </div>
     );
