@@ -50,7 +50,14 @@ class Home extends React.Component<any, IState> {
 
 
   public getGenres = async () => {
-    const genres = await this.spotify.getGenres();
+    let genres;
+    try {
+      genres = await this.spotify.getGenres();
+    } catch(e) {
+      // tslint:disable-next-line:no-console
+      console.log('e', e)
+      this.onError(e);
+    }
     this.setState({genres})
   }
   public saveGenre = (genre: string) => {
@@ -79,7 +86,11 @@ class Home extends React.Component<any, IState> {
     // get current search options
     const options = this.state.searchOptions;
     // update this attribute with new value
-    options[attribute.name] = attribute.value;
+    if (!attribute.value) {
+      delete options[attribute.name];
+    } else {
+      options[attribute.name] = attribute.value;
+    }
     this.setState({searchOptions: options})
   }
 
