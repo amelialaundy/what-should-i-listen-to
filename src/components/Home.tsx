@@ -1,15 +1,12 @@
 import * as React from 'react';
 import * as SpotifyWebApi from 'spotify-web-api-js'
 
-/// <reference path="../node_modules/spotify-web-api-js/src/typings/spotify-web-api.d.ts" />
 import '../App.css';
 
 import {IQueryAttribute} from '../Attributes'
 import {InitiateSpotify} from '../helpers/Spotify'
 import ArtistSearch from './ArtistSearch';
 import QueryAttributes from './QueryAttributes';
-// import AccessToken from './Search'
-
 
 export interface IState {
   artistsIds: string[]; 
@@ -23,7 +20,6 @@ export interface IState {
 class Home extends React.Component<any, IState> {
   private spotifiyClient: SpotifyWebApi.SpotifyWebApiJs;
   private loginUrl: string = "https://accounts.spotify.com/authorize?client_id=760467e647f4408dab802bd3f3d7a82e&redirect_uri=http:%2F%2Flocalhost:3000%2Fcallback&scope=user-read-private%20user-read-email&response_type=token&state=123";
-
 
   constructor(props: any) {
     super(props)
