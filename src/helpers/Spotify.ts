@@ -2,26 +2,20 @@ import * as SpotifyWebApi from 'spotify-web-api-js'
 
 export class Spotify {
     private client: SpotifyWebApi.SpotifyWebApiJs;
-    constructor (token: string) {
+    constructor(token: string) {
         this.client = new SpotifyWebApi();
         this.client.setAccessToken(token);
     }
 
-    public searchArtists = async(artists: string[]) => {
-        let results;
-         try {
-           results = await Promise.all(artists.map(async (a) => this.searchArtistByName(a)));
-        } catch(e) {
-            this.onError(e)
-        }
-        return results as SpotifyApi.ArtistObjectFull[];
+    public searchArtists = async (artists: string[]): Promise<SpotifyApi.ArtistObjectFull[]> => {
+        return await Promise.all(artists.map(async (a) => this.searchArtistByName(a)));
     }
 
-    public getGenres = async() => {
+    public getGenres = async () => {
         let results;
-         try {
-           results =await this.getGenreList();
-        } catch(e) {
+        try {
+            results = await this.getGenreList();
+        } catch (e) {
             this.onError(e)
         }
         return results as string[];
@@ -40,28 +34,23 @@ export class Spotify {
         return recommendations;
     }
 
-    private searchArtistByName = async(artist: string) => {
-        let results;
-        try {
-            results = (await this.client.searchArtists(artist, {})).artists.items[0]
-        } catch(e) {
-            this.onError(e)
-        }
-        return results;
+    private searchArtistByName = async (artist: string): Promise<SpotifyApi.ArtistObjectFull> => {
+        const results = (await this.client.searchArtists(artist, {}))
+        return results.artists.items[0];
     }
-    private getGenreList = async() => {
+    private getGenreList = async () => {
         let results;
         try {
             results = (await this.client.getAvailableGenreSeeds()).genres
-        } catch(e) {
+        } catch (e) {
             this.onError(e)
         }
         return results;
     }
 
-    private onError = (e: any) => {
+    private onError = (e: any): Error => {
         // tslint:disable-next-line:no-console
-        console.log('error requesting artists',e);
+        console.log('error requesting artists', e);
         throw e;
     }
 }
