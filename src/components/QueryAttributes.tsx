@@ -24,15 +24,13 @@ class QueryAttributes extends React.Component<IProps, IState> {
     public getAttribute = (attribute: IQueryAttribute) => {
         return (
             <div className='info-container' key={attribute.name}>
-                <p className='attribute-name'>{attribute.displayName}</p>
+                <span className='attribute-name' data-tooltip={attribute.description}>{attribute.displayName}</span>
                 <input className='attribute-value'
                     type="number" 
                     step={attribute.step}
                     min={attribute.min} 
                     max={attribute.max} 
                     onChange={(e) => attribute.onChange(e, this.props.onChange)} />
-                <p className='attribute-description'>{attribute.description}</p>
-                    
             </div>
         )
     }
