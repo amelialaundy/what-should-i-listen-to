@@ -259,6 +259,13 @@ pre code {
   grid-column: col / span 5;
   grid-row: row 1;
 }
+
+.artist .hide {
+  display: none;
+}
+
+
+
 .genre {
   grid-column: col / span 5;
   grid-row: row 2;
