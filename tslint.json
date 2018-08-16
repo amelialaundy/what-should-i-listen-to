@@ -1,5 +1,8 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "indent": [true, "tabs", 2]
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",

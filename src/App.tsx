@@ -8,13 +8,13 @@ import Main from './components/Main'
 
 
 class App extends React.Component {
-  public render() {
-    return (
-    <div>
-      <Header/>
-      <Main />
-    </div>)
-  }
+	public render() {
+		return (
+		<div>
+			<Header/>
+			<Main />
+		</div>)
+	}
 }
 
 export default App;
