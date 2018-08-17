@@ -33,17 +33,16 @@ class Home extends React.Component<any, IState> {
 		this.state = { playlistLink: '', artistsIds: [], error: {}, token: tokenInStorage ? tokenInStorage : '', initiated: tokenInStorage ? true : false, searchOptions: {} }
 	}
 
-	public async call<T1, T2>(func: (p: T2) => T1 | undefined, params: T2, errorMessage?: string): Promise<T1|undefined>
-	public async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 | undefined, params: T2, params2: T3, errorMessage?: string): Promise<T1|undefined>
-	public async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 | undefined, params: T2, params2: T3,errorMessage?: string): Promise<T1|undefined> {
+	public async call<T1, T2>(func: (p: T2) => T1 , params: T2, errorMessage?: string): Promise<T1>
+	public async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 , params: T2, params2: T3, errorMessage?: string): Promise<T1>
+	public async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 , params: T2, params2: T3,errorMessage?: string): Promise<T1> {
 		const genericMessage = 'an error occurred';
 		try {
 			return await func(params, params2)
 	 } catch (e) {
 		 // tslint:disable-next-line:no-console
 		 console.log(`error calling ${func}: ${errorMessage || genericMessage}`);
-		 this.onError(e);
-		 return;
+		 return this.onError(e);
 	 }
 	}
 
@@ -63,7 +62,7 @@ class Home extends React.Component<any, IState> {
 		console.log('getting artists', artistNames)
 		const errorMessage = 'error getting artists';
 		let artists: SpotifyApi.ArtistObjectFull[] = [];
-		artists = await this.call<Promise<SpotifyApi.ArtistObjectFull[]>, string[]>(this.spotify.searchArtists, artistNames, errorMessage) as SpotifyApi.ArtistObjectFull[];
+		artists = await this.call<Promise<SpotifyApi.ArtistObjectFull[]>, string[]>(this.spotify.searchArtists, artistNames, errorMessage);
 		
 		const artistsIds = artists.filter(a => !!a).map(r => r.id);
 		const opts = this.state.searchOptions;
@@ -89,14 +88,15 @@ class Home extends React.Component<any, IState> {
 	}
 	public getRecommendations = async () => {
 		const recommendations = await 
-			this.call<Promise<SpotifyApi.RecommendationsFromSeedsResponse | undefined>,SpotifyApi.RecommendationsOptionsObject>(this.spotify.getRecommendations, this.state.searchOptions) as SpotifyApi.RecommendationsFromSeedsResponse;
+			this.call<Promise<SpotifyApi.RecommendationsFromSeedsResponse>,SpotifyApi.RecommendationsOptionsObject>(this.spotify.getRecommendations, this.state.searchOptions);
 		this.setState({ recommendations, playlistLink: '' })
 	}
 
-	public onError = (e: any) => {
+	public onError = (e: any): never => {
 		if (e.status === 401) {
 			this.setState({ token: undefined, initiated: false })
 		}
+		throw(e);
 	}
 
 	public attributesOnChange = (attribute: IQueryAttribute) => {
@@ -122,18 +122,16 @@ class Home extends React.Component<any, IState> {
 		const playlistName = 'test';
 		const recs = this.state.recommendations as SpotifyApi.RecommendationsFromSeedsResponse;
 		const playListContents = recs.tracks.map(r => r.uri);
-		const res = await this.call<Promise<SpotifyApi.CreatePlaylistResponse>,string, string[]>(this.spotify.createPlaylistAndAddTracks, playlistName, playListContents, 'error getting genres') as SpotifyApi.CreatePlaylistResponse
+		const res = await this.call<Promise<SpotifyApi.CreatePlaylistResponse>,string, string[]>(this.spotify.createPlaylistAndAddTracks, playlistName, playListContents, 'error getting genres');
 		this.setState({playlistLink: res.uri});
 	}
 
 	public showSearch = () => {
 		return (
 			<div className='search-grid'>
-			
 				<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
 				<GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 				<QueryAttributes onChange={this.attributesOnChange} />
-				
 			</div>
 		)
 	}
