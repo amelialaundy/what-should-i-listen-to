@@ -22,7 +22,7 @@ export interface IState {
 
 class Home extends React.Component<any, IState> {
 	private spotify: Spotify;
-	private loginUrl: string = "https://accounts.spotify.com/authorize?client_id=760467e647f4408dab802bd3f3d7a82e&redirect_uri=http:%2F%2F192.168.178.49:3000%2Fcallback&scope=user-read-private%20user-read-email%20playlist-modify-private&response_type=token&state=123";
+	private loginUrl: string = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_HOST}%2Fcallback&scope=user-read-private%20user-read-email%20playlist-modify-private&response_type=token&state=123`;
 
 	constructor(props: any) {
 		super(props)
