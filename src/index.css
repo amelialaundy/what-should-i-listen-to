@@ -29,6 +29,269 @@ pre code {
   padding: 8px 0;
 }
 
+.type-container {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  /* font-size: 150%; */
+}
+
+.artist {
+  grid-column: col / span 4;
+  grid-row: row 1;
+}
+
+.artist-item {
+  /* float: left;
+  width: 40%; */
+  float: left;
+ 
+  width: 100%;
+}
+
+.genre {
+  grid-column: col / span 4;
+  grid-row: row 2;
+}
+
+.search-grid {
+  grid-column: col 1 / span 1;
+  grid-row: row 1;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+
+
+  display: grid;
+  grid-column-gap: 2%;
+  grid-row-gap: 2%;
+  grid-template-columns: repeat(4, [col] 23.5% ) ;
+  grid-template-rows: repeat(6, [row] auto  );
+  background-color: #fff;
+  color: #444;
+  height: 500px;
+}
+
+.outer-grid {
+  display: grid;
+  grid-column-gap: 2%;
+  grid-row-gap: 2%;
+  grid-template-columns: repeat(2, [col] 49% ) ;
+  grid-template-rows: repeat(2, [row] auto  );
+  background-color: #fff;
+  color: #444;
+  height: 500px;
+}
+
+.recommendations-block {
+  grid-column: col 2 / span 2;
+  grid-row: row 1;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  overflow: scroll;
+
+  display: grid;
+  grid-column-gap: 2%;
+  grid-row-gap: 2%;
+  grid-template-columns: repeat(4, [col] 23.5% ) ;
+  grid-template-rows: repeat(6, [row] auto  );
+  background-color: #fff;
+  color: #444;
+  height: 500px;
+
+}
+
+.result-item {
+  grid-column: col 1 / span 4;
+}
+
+.search {
+  grid-column: col 1 / span 1;
+  grid-row: row 2;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+
+.attributes {
+  grid-column: col 1 / span 4;
+  grid-row: row 3;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+/* .info-container {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: row1-start;
+  grid-row-end: 3;
+} */
+
+.attribute {
+  float: left;
+}
+/* 
+.attribute-container {
+  overflow: auto;
+  margin-bottom: 10%;
+  grid-template-columns: 40px 50px auto 50px 40px;
+  grid-template-rows: 25% 100px auto
+} */
+
+.attribute-name {
+  /* float: left;
+  width: 40%; */
+  float: left;
+  
+  margin: 10px;
+}
+
+/* p.attribute-name + p.attribute-description {
+    display: block;
+} */
+
+.attribute-value {
+  float: right;
+  width: 10%;
+  margin-left: 5%;
+  padding: 20px 10px;
+  border-radius: 10px
+}
+/* 
+.attribute-description {
+  margin: 20px;
+  width: 55%;
+  float: left;
+  display: none;
+} */
+
+.artistSearch {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: #333;
+
+  padding: 8px 8px;
+
+  width: 30%;
+  margin: auto;
+  font-weight: bold;
+  font-size:14px
+}
+
+.artistButton {
+  position: relative;
+  padding: 10px 20px;
+  margin: 10px auto;
+}
+
+
+.Dropdown-root {
+  position: relative;
+}
+
+.Dropdown-control {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: #333;
+  cursor: default;
+  outline: none;
+  padding: 8px 52px 8px 10px;
+  transition: all 200ms ease;
+  width: 30%;
+  margin: auto;
+  
+}
+
+.Dropdown-control:hover {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.Dropdown-arrow {
+  border-color: #999 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  content: ' ';
+  display: block;
+  height: 0;
+  margin-top: -ceil(2.5);
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  width: 0
+}
+
+.is-open .Dropdown-arrow {
+  border-color: transparent transparent #999;
+  border-width: 0 5px 5px;
+}
+
+.Dropdown-menu {
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+}
+
+.Dropdown-menu .Dropdown-group > .Dropdown-title {
+  padding: 8px 10px;
+  color: rgba(51, 51, 51, 1.2);
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.Dropdown-option {
+  box-sizing: border-box;
+  color: rgba(51, 51, 51, 0.8);
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+}
+
+.Dropdown-option:last-child {
+  border-bottom-right-radius: 2px;
+   border-bottom-left-radius: 2px;
+}
+
+.Dropdown-option:hover {
+  background-color: #f2f9fc;
+  color: #333;
+}
+
+.Dropdown-option.is-selected {
+  background-color: #f2f9fc;
+  color: #333;
+}
+
+.Dropdown-noresults {
+  box-sizing: border-box;
+  color: #ccc;
+  cursor: default;
+  display: block;
+  padding: 8px 10px;
+}
+
+.my-custom-class {
+  font-weight: bold;
+  color: purple;
+}
+
 
 
 /**
@@ -240,219 +503,4 @@ pre code {
 .tooltip-right:after {
   margin-left: 0;
   margin-bottom: -16px;
-}
-
-
-.grid {
-  display: grid;
-  grid-column-gap: 2%;
-  grid-row-gap: 2%;
-  grid-template-columns: repeat(4, [col] 23.5% ) ;
-  grid-template-rows: repeat(6, [row] auto  );
-  background-color: #fff;
-  color: #444;
-  height: 500px;
-}
-
-.type-container {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  /* font-size: 150%; */
-}
-
-.artist {
-  grid-column: col / span 2;
-  grid-row: row 1;
-}
-
-.artist-item {
-  /* float: left;
-  width: 40%; */
-  float: left;
- 
-  width: 100%;
-}
-
-
-
-.genre {
-  grid-column: col / span 2;
-  grid-row: row 2;
-}
-
-.attributes {
-  grid-column: col 1 / span 2;
-  grid-row: row 3;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 1fr;
-}
-
-/* .info-container {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: row1-start;
-  grid-row-end: 3;
-} */
-
-.attribute {
-  float: left;
-}
-
-.attribute-container {
-  overflow: auto;
-  margin-bottom: 10%;
-  grid-template-columns: 40px 50px auto 50px 40px;
-  grid-template-rows: 25% 100px auto
-}
-
-.attribute-name {
-  /* float: left;
-  width: 40%; */
-  float: left;
-  
-  margin: 10px;
-}
-
-/* p.attribute-name + p.attribute-description {
-    display: block;
-} */
-
-.attribute-value {
-  float: right;
-  width: 10%;
-  margin-left: 5%;
-  padding: 20px 10px;
-  border-radius: 10px
-}
-/* 
-.attribute-description {
-  margin: 20px;
-  width: 55%;
-  float: left;
-  display: none;
-} */
-
-.artistSearch {
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  box-sizing: border-box;
-  color: #333;
-
-  padding: 8px 8px;
-
-  width: 30%;
-  margin: auto;
-  font-weight: bold;
-  font-size:14px
-}
-
-.artistButton {
-  position: relative;
-  padding: 10px 20px;
-  margin: 10px auto;
-}
-
-.Dropdown-root {
-  position: relative;
-}
-
-.Dropdown-control {
-  position: relative;
-  overflow: hidden;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  box-sizing: border-box;
-  color: #333;
-  cursor: default;
-  outline: none;
-  padding: 8px 52px 8px 10px;
-  transition: all 200ms ease;
-  width: 30%;
-  margin: auto;
-  
-}
-
-.Dropdown-control:hover {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-}
-
-.Dropdown-arrow {
-  border-color: #999 transparent transparent;
-  border-style: solid;
-  border-width: 5px 5px 0;
-  content: ' ';
-  display: block;
-  height: 0;
-  margin-top: -ceil(2.5);
-  position: absolute;
-  right: 10px;
-  top: 14px;
-  width: 0
-}
-
-.is-open .Dropdown-arrow {
-  border-color: transparent transparent #999;
-  border-width: 0 5px 5px;
-}
-
-.Dropdown-menu {
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-  box-sizing: border-box;
-  margin-top: -1px;
-  max-height: 200px;
-  overflow-y: auto;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  z-index: 1000;
-  -webkit-overflow-scrolling: touch;
-}
-
-.Dropdown-menu .Dropdown-group > .Dropdown-title {
-  padding: 8px 10px;
-  color: rgba(51, 51, 51, 1.2);
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.Dropdown-option {
-  box-sizing: border-box;
-  color: rgba(51, 51, 51, 0.8);
-  cursor: pointer;
-  display: block;
-  padding: 8px 10px;
-}
-
-.Dropdown-option:last-child {
-  border-bottom-right-radius: 2px;
-   border-bottom-left-radius: 2px;
-}
-
-.Dropdown-option:hover {
-  background-color: #f2f9fc;
-  color: #333;
-}
-
-.Dropdown-option.is-selected {
-  background-color: #f2f9fc;
-  color: #333;
-}
-
-.Dropdown-noresults {
-  box-sizing: border-box;
-  color: #ccc;
-  cursor: default;
-  display: block;
-  padding: 8px 10px;
-}
-
-.my-custom-class {
-  font-weight: bold;
-  color: purple;
 }

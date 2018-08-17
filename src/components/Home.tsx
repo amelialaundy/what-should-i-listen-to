@@ -118,14 +118,11 @@ class Home extends React.Component<any, IState> {
 
 	public showSearch = () => {
 		return (
-			<div>
-			<div className='grid'>
+			<div className='search-grid'>
+			
 				<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
 				<GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 				<QueryAttributes onChange={this.attributesOnChange} />
-				
-				</div>
-				<button onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>
 				
 			</div>
 		)
@@ -134,10 +131,8 @@ class Home extends React.Component<any, IState> {
 	public showRecommendationResults = () => {
 		const recs = this.state.recommendations as SpotifyApi.RecommendationsFromSeedsResponse;
 		return (
-			<div>
-				<ul>
-					{recs.tracks.map(t => (<p key={t.id}><a href={t.external_urls.spotify}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a></p>))}
-				</ul>
+			<div className='recommendations-block'>
+					{recs.tracks.map(t => (<a className='result-item' key={t.id} href={t.external_urls.spotify}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
 			</div>
 		)
 	}
@@ -146,8 +141,11 @@ class Home extends React.Component<any, IState> {
 		return (
 			<div className="App">
 				{!this.state.initiated && <a href={this.loginUrl}>Log in to Spotify</a>}
-				{this.state.initiated && this.showSearch()}
-				{this.state.recommendations && this.showRecommendationResults()}
+				<div className='outer-grid'>
+					{this.state.initiated && this.showSearch()}
+					{this.state.recommendations && this.showRecommendationResults()}
+					<button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>
+				</div>
 
 			</div>
 		);
