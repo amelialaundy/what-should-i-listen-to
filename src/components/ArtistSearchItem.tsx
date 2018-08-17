@@ -36,9 +36,8 @@ class ArtistSearchItem extends React.Component<IProps, IState> {
 	}
 
 	public render() {
-		const { visible } = this.props;
 		return (
-			<span className={`artist ${visible ? 'show' : 'hide'}`}>
+			<span className={'artist-item'}>
 				<input className={'artistSearch'}
 							 type="text" name="artistList" 
 							 value={this.props.value || this.state.searchInput} 
