@@ -6,8 +6,9 @@ import Home from './Home'
 const Main = () => (
 	<main>
 		<Switch>
-			<Route exact={true} path='/' component={Home}/>
-			<Route path='/callback' component={Callback}/>
+			<Route exact={true} path='/callback' component={Callback}/>
+			<Route path='/*' component={Home}/>
+			
 		</Switch>
 	</main>
 )
