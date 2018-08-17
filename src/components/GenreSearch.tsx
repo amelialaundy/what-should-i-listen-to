@@ -11,6 +11,7 @@ interface IProps {
 		visible: boolean;
 		genreList: string[];
 		onSearch: (genre: string) => void;
+		removeGenre: () => void;
 		onError: (e: any) => void;
 }
 
@@ -28,11 +29,12 @@ class GenreSearch extends React.Component<IProps, IState> {
 				// tslint:disable-next-line:no-console
 				console.log('update input', searchInput)
 				this.setState({genreToSearch: searchInput})
+				this.props.onSearch(searchInput);
 		}
 		public onSubmit = async (e: any) => {
 				e.preventDefault()
-				const genre = this.state.genreToSearch;
-				this.props.onSearch(genre);
+				this.setState({genreToSearch: ''})
+				this.props.removeGenre();
 		}
 
 
@@ -44,15 +46,15 @@ class GenreSearch extends React.Component<IProps, IState> {
 						}
 				});
 				const className = 'my-custom-class'
-				const defaultOption = this.state.genreToSearch ? {label: this.state.genreToSearch, value: this.state.genreToSearch} : options[0];
+				const defaultOption = this.state.genreToSearch ? {label: this.state.genreToSearch, value: this.state.genreToSearch} : {label: 'Select genre', value: ''};
 				return (
 						<div className="type-container genre">
 						<form onSubmit={this.onSubmit}>
 								<label>
 								Enter a genre name:
-								<Dropdown className={className} options={options} value={defaultOption} onChange={this.updateInput}/>
+								<Dropdown  className={className} options={options} value={defaultOption} onChange={this.updateInput}/>
 								</label>
-								<input type="submit" value="Add genre to search" />
+								<input type="submit" value="Remove genre from search" />
 						</form>
 						</div>
 				);

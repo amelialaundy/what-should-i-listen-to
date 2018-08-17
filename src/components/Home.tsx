@@ -22,6 +22,8 @@ export interface IState {
 class Home extends React.Component<any, IState> {
 	private spotify: Spotify;
 	private loginUrl: string = "https://accounts.spotify.com/authorize?client_id=760467e647f4408dab802bd3f3d7a82e&redirect_uri=http:%2F%2F192.168.178.49:3000%2Fcallback&scope=user-read-private%20user-read-email&response_type=token&state=123";
+	private genericMessage = 'an error occurred';
+	
 
 	constructor(props: any) {
 		super(props)
@@ -41,18 +43,26 @@ class Home extends React.Component<any, IState> {
 		}
 	}
 
+	public makeCall = async (func: (p: any) => any, params?: any, errorMessage?: any) => {
+		let results: any;
+		try {
+			results = await func(params)
+	 } catch (e) {
+		 // tslint:disable-next-line:no-console
+		 console.log(`error calling ${func}: ${errorMessage || this.genericMessage}`);
+		 this.onError(e);
+		 return;
+	 }
+	 return results;
+	}
+
 	public getArtistIds = async (artistNames: string[]) => {
 		// tslint:disable-next-line:no-console
 		console.log('getting artists', artistNames)
+		const errorMessage = 'error getting artists';
 		let artists: SpotifyApi.ArtistObjectFull[] = [];
-		try {
-			 artists = (await this.spotify.searchArtists(artistNames))
-		} catch (e) {
-			// tslint:disable-next-line:no-console
-			console.log('error getting artists');
-			this.onError(e);
-			return;
-		}
+		artists = await this.makeCall(this.spotify.searchArtists,artistNames, errorMessage)
+		
 		const artistsIds = artists.filter(a => !!a).map(r => r.id);
 		const opts = this.state.searchOptions;
 		opts.seed_artists = artistsIds.join(',')
@@ -62,13 +72,7 @@ class Home extends React.Component<any, IState> {
 
 	public getGenres = async () => {
 		let genres;
-		try {
-			genres = await this.spotify.getGenres();
-		} catch (e) {
-			// tslint:disable-next-line:no-console
-			console.log('e', e)
-			this.onError(e);
-		}
+		genres = await this.makeCall(this.spotify.getGenres, null, 'error getting genres')
 		this.setState({ genres })
 	}
 	public saveGenre = (genre: string) => {
@@ -76,15 +80,15 @@ class Home extends React.Component<any, IState> {
 		options.seed_genres = genre;
 		this.setState({ searchOptions: options })
 	}
+
+	public removeGenre = () => {
+		const newOptions = this.state.searchOptions;
+		delete newOptions.seed_genres
+		this.setState({searchOptions: newOptions})
+	}
 	public getRecommendations = async () => {
-		try {
-			const recommendations = await this.spotify.getRecommendations(this.state.searchOptions);
-			this.setState({ recommendations })
-		} catch (e) {
-			// tslint:disable-next-line:no-console
-			console.log('e', e)
-			this.onError(e);
-		}
+		const recommendations = await this.makeCall(this.spotify.getRecommendations, this.state.searchOptions)
+		this.setState({ recommendations })
 	}
 
 	public onError = (e: any) => {
@@ -116,7 +120,7 @@ class Home extends React.Component<any, IState> {
 		return (
 			<div className='grid'>
 				<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
-				<GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} genreList={this.state.genres as string[]} onError={this.onError} />
+				<GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 				<QueryAttributes onChange={this.attributesOnChange} />
 				<div>
 					<button onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>
