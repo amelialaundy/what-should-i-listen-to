@@ -9,7 +9,7 @@ class Callback extends React.Component<RouteComponentProps<any>, any> {
 		// remove the `#` at start
 		const parsed = qs.parse(q.slice(1, q.length));
 		localStorage.setItem('token', parsed.access_token);
-		return (<Redirect to='/' />)
+		return (<Redirect to={`${process.env.REACT_APP_URI}`} />)
 	}
 }
 

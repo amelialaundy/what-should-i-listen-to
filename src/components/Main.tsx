@@ -7,7 +7,7 @@ const Main = () => (
 	<main>
 		<Switch>
 			<Route exact={true} path={`${process.env.REACT_APP_URI}callback`} component={Callback}/>
-			<Route path='/*' component={Home}/>
+			<Route path={process.env.REACT_APP_URI} component={Home}/>
 			
 		</Switch>
 	</main>
