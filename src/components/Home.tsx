@@ -44,8 +44,15 @@ class Home extends React.Component<any, IState> {
 	public getArtistIds = async (artistNames: string[]) => {
 		// tslint:disable-next-line:no-console
 		console.log('getting artists', artistNames)
-		const artists = (await this.spotify.searchArtists(artistNames))
-		// tslint:disable-next-line:no-console
+		let artists: SpotifyApi.ArtistObjectFull[] = [];
+		try {
+			 artists = (await this.spotify.searchArtists(artistNames))
+		} catch (e) {
+			// tslint:disable-next-line:no-console
+			console.log('error getting artists');
+			this.onError(e);
+			return;
+		}
 		const artistsIds = artists.filter(a => !!a).map(r => r.id);
 		const opts = this.state.searchOptions;
 		opts.seed_artists = artistsIds.join(',')
