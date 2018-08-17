@@ -5,7 +5,7 @@ import '../App.css';
 
 import { IQueryAttribute } from '../Attributes'
 import { Spotify } from '../helpers/Spotify'
-import ArtistSearch from './ArtistSearch';
+import ArtistSearchList from './ArtistSearchList';
 import GenreSearch from './GenreSearch';
 import QueryAttributes from './QueryAttributes';
 
@@ -46,7 +46,6 @@ class Home extends React.Component<any, IState> {
 		console.log('getting artists', artistNames)
 		const artists = (await this.spotify.searchArtists(artistNames))
 		// tslint:disable-next-line:no-console
-		console.log('artists from spot', artists)
 		const artistsIds = artists.filter(a => !!a).map(r => r.id);
 		const opts = this.state.searchOptions;
 		opts.seed_artists = artistsIds.join(',')
@@ -109,7 +108,7 @@ class Home extends React.Component<any, IState> {
 	public showSearch = () => {
 		return (
 			<div className='grid'>
-				<ArtistSearch visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
+				<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
 				<GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 				<QueryAttributes onChange={this.attributesOnChange} />
 				<div>
