@@ -1,7 +1,12 @@
+html {
+  height: 100%;
+}
 body {
   margin: 20px auto;
   width: 60%;
+  height: 100%;
   font-family: sans-serif;
+
 }
 
 header h2 {
@@ -240,11 +245,13 @@ pre code {
 
 .grid {
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(5, [col] auto ) ;
+  grid-column-gap: 2%;
+  grid-row-gap: 2%;
+  grid-template-columns: repeat(4, [col] 23.5% ) ;
   grid-template-rows: repeat(6, [row] auto  );
   background-color: #fff;
   color: #444;
+  height: 500px;
 }
 
 .type-container {
@@ -256,7 +263,7 @@ pre code {
 }
 
 .artist {
-  grid-column: col / span 5;
+  grid-column: col / span 2;
   grid-row: row 1;
 }
 
@@ -267,19 +274,16 @@ pre code {
  
   width: 100%;
 }
-.artist .hide {
-  display: none;
-}
 
 
 
 .genre {
-  grid-column: col / span 5;
+  grid-column: col / span 2;
   grid-row: row 2;
 }
 
 .attributes {
-  grid-column: col 1 / span 5;
+  grid-column: col 1 / span 2;
   grid-row: row 3;
   display: grid;
   grid-gap: 10px;
@@ -332,9 +336,17 @@ pre code {
 } */
 
 .artistSearch {
-  position: relative;
-  padding: 10px 20px;
-  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: #333;
+
+  padding: 8px 8px;
+
+  width: 30%;
+  margin: auto;
+  font-weight: bold;
+  font-size:14px
 }
 
 .artistButton {
@@ -359,7 +371,7 @@ pre code {
   outline: none;
   padding: 8px 52px 8px 10px;
   transition: all 200ms ease;
-  width: 20%;
+  width: 30%;
   margin: auto;
   
 }
