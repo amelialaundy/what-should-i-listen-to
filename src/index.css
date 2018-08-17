@@ -71,7 +71,7 @@ pre code {
 .search-grid {
   grid-column: col 1 / span 1;
   grid-row: row 1;
-  grid-gap: 10px;
+  grid-gap: 10%;
   grid-template-columns: 1fr 1fr;
 
 
@@ -180,7 +180,7 @@ pre code {
 
   padding: 8px 8px;
 
-  width: 30%;
+  width: 50%;
   margin: auto;
   font-weight: bold;
   font-size:14px
@@ -192,6 +192,19 @@ pre code {
   margin: 10px auto;
 }
 
+@media screen and (max-width: 480px) {
+  .search-grid {
+    grid-column: col 1 / span 2;
+    grid-row: row 1
+  }
+  .recommendations-block {
+    grid-column: col 1 / span 2;
+    grid-row: row 2
+  }
+  body {
+    width: 90%
+  }
+}
 
 .Dropdown-root {
   position: relative;
@@ -209,7 +222,7 @@ pre code {
   outline: none;
   padding: 8px 52px 8px 10px;
   transition: all 200ms ease;
-  width: 30%;
+  width: 60%;
   margin: auto;
   
 }
