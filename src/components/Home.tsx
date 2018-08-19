@@ -104,29 +104,25 @@ class Home extends React.Component<any, IState> {
 	public showSearch = () => {
 		if (!this.state.initiated) { return; }
 			return (
-				<div>
 					<div className='search-grid'>
 						<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
 						<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 						<QueryAttributes onChange={this.attributesOnChange} />
 					</div>
-					{this.state.initiated && <button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>}
-				</div>
 			)
 	}
 
 	public showRecommendationResults = () => {
 		if (!this.state.recommendations ) { return; }
 		const recs = this.state.recommendations;
+		// turn this into its own component for rendering
+		// add an input for name of playlist when saving it to spotify
 		return (
-			<div>
 				<div className='recommendations-block'>
 					<h2 className='result-item'>Results</h2>
 					{recs.tracks.length > 0 && <button onClick={this.createPlaylist} className='result-item'>Create new Spotify playlist</button>}
 					{recs.tracks.map(t => (<a className='result-item' key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
 				</div>
-				{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
-			</div>
 		)
 	}
 
@@ -136,7 +132,9 @@ class Home extends React.Component<any, IState> {
 				{!this.state.initiated && <a href={this.loginUrl}>Log in to Spotify</a>}
 				<div className='outer-grid'>
 					{this.showSearch()}
+					{this.state.initiated && <button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>}
 					{this.showRecommendationResults()}
+					{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
 				</div>
 			</div>
 		);
