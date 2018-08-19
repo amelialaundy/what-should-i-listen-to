@@ -8,7 +8,6 @@ interface IState {
 }
 
 interface IProps {
-		visible: boolean;
 		genreList: string[];
 		onSearch: (genre: string) => void;
 		removeGenre: () => void;
