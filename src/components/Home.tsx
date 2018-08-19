@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import '../App.css';
 
-import { IQueryAttribute } from '../Attributes'
+import { IAttributeChangeValue } from '../Attributes'
 import { Spotify } from '../helpers/Spotify'
 import ArtistSearchList from './ArtistSearchList';
 import GenreSearch from './GenreSearch';
@@ -84,7 +84,7 @@ class Home extends React.Component<any, IState> {
 		this.setState({searchOptions})
 	}
 
-	public attributesOnChange = (attribute: IQueryAttribute) => {
+	public attributesOnChange = (attribute: IAttributeChangeValue) => {
 		// get current search options
 		const { searchOptions } = this.state;
 		// update this attribute with new value

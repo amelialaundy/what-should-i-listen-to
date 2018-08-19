@@ -2,12 +2,16 @@ export interface IQueryAttribute {
 		name: string;
 		displayName: string;
 		description: string;
-		value?: number;
 		min: number;
 		max: number;
 		step: number;
-		onChange(e: any, cb: (attribute: IQueryAttribute) => {}): any;
 }
+
+export interface IAttributeChangeValue {
+	name: string;
+	value?: number;
+}
+
 class QueryAttribute implements IQueryAttribute{
 		public description: string;
 		public displayName: string;
@@ -15,11 +19,7 @@ class QueryAttribute implements IQueryAttribute{
 		public min: number;
 		public max: number;
 		public step: number;
-		public value?: number | undefined;
-		public onChange = (e: any, cb: (attribute: IQueryAttribute) => {}) => {
-				this.value = e.target.value as number;
-				cb(this);
-		};
+		
 }
 // tslint:disable-next-line:max-classes-per-file
 export class MinDanceability extends QueryAttribute {

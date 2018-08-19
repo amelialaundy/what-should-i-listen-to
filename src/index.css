@@ -146,6 +146,10 @@ pre code {
   grid-template-rows: 25% 100px auto
 } */
 
+.attribute-slider {
+  float: left;
+}
+
 .attribute-name {
   /* float: left;
   width: 40%; */
