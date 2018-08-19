@@ -1,8 +1,7 @@
 // src/components/search.tsx
 
+import { Button, FormControl, FormHelperText, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
 import * as React from 'react';
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
 interface IState {
 		genreToSearch: string;
 }
@@ -24,7 +23,7 @@ class GenreSearch extends React.Component<IProps, IState> {
 		}
 
 		public updateInput = (event: any) => {
-				const searchInput = event.value;
+				const searchInput = event.target.value;
 				// tslint:disable-next-line:no-console
 				console.log('update input', searchInput)
 				this.setState({genreToSearch: searchInput})
@@ -48,13 +47,26 @@ class GenreSearch extends React.Component<IProps, IState> {
 				const defaultOption = this.state.genreToSearch ? {label: this.state.genreToSearch, value: this.state.genreToSearch} : {label: 'Select genre', value: ''};
 				return (
 						<div className="type-container genre">
-						<form onSubmit={this.onSubmit}>
-								<label>
-								Enter a genre name:
-								<Dropdown  className={className} options={options} value={defaultOption} onChange={this.updateInput}/>
-								</label>
-								<input type="submit" value="Remove genre from search" />
-						</form>
+								<FormControl className={className}>
+									<InputLabel htmlFor="age-auto-width">Genre</InputLabel>
+									<Select
+										value={defaultOption.value}
+										onChange={this.updateInput}
+										input={<Input name="Genre" id="age-auto-width" />}
+										autoWidth={true}
+									>
+										<MenuItem value="">
+											<em>None</em>
+										</MenuItem>
+										{options.map((o, i) => {
+											return (
+											<MenuItem key={i} value={o.value}>{o.label}</MenuItem>
+											)
+										})}
+									</Select>
+									<FormHelperText>Please select a genre</FormHelperText>
+								</FormControl>
+								<Button variant="outlined" color="primary" onClick={this.onSubmit}>Remove</Button>
 						</div>
 				);
 		}

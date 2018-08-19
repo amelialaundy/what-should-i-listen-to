@@ -1,4 +1,5 @@
 // tslint:disable:no-console
+import {Button, TextField} from '@material-ui/core'
 import * as React from 'react';
 
 interface IState {
@@ -38,11 +39,13 @@ class ArtistSearchItem extends React.Component<IProps, IState> {
 	public render() {
 		return (
 			<span className={'artist-item'}>
-				<input className={'artistSearch'}
-							 type="text" name="artistList" 
-							 value={this.props.value || this.state.searchInput} 
-							 onChange={this.onChange} />
-				<button onClick={this.remove}>remove</button>
+				<TextField 
+					className={'artistSearch'}
+					type="text" name="artistList" 
+					value={this.props.value || this.state.searchInput} 
+					onChange={this.onChange} 
+					placeholder={'Enter an Artist'}/>
+				<Button variant="raised" color="primary" onClick={this.remove}>remove</Button>
 			</span>)
 	}
 }
