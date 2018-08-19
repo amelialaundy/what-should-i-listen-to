@@ -105,8 +105,10 @@ class Home extends React.Component<any, IState> {
 		if (!this.state.initiated) { return; }
 			return (
 					<div className='search-grid'>
-						<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
-						<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
+						<div className='artist-genre'>
+							<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
+							<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
+						</div>
 						<QueryAttributes onChange={this.attributesOnChange} />
 					</div>
 			)

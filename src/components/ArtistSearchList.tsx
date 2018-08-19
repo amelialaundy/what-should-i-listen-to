@@ -57,9 +57,6 @@ class ArtistSearchList extends React.Component<IProps, IState> {
 	public render() {
 		return (
 			<div className="type-container artist">
-				<h4>
-					Enter up to 5 artists:
-				</h4>
 				{this.state.artistList.map((x, i) => {
 					return (<ArtistSearchItem visible={true} 
 																		value={x.name} 
