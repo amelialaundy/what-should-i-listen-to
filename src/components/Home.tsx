@@ -79,49 +79,53 @@ class Home extends React.Component<any, IState> {
 	}
 
 	public removeGenre = () => {
-		const newOptions = this.state.searchOptions;
-		delete newOptions.seed_genres
-		this.setState({searchOptions: newOptions})
+		const {searchOptions} = this.state;
+		delete searchOptions.seed_genres
+		this.setState({searchOptions})
 	}
 
 	public attributesOnChange = (attribute: IQueryAttribute) => {
 		// get current search options
-		const options = this.state.searchOptions;
+		const { searchOptions } = this.state;
 		// update this attribute with new value
 		if (!attribute.value) {
-			delete options[attribute.name];
+			delete searchOptions[attribute.name];
 		} else {
-			options[attribute.name] = attribute.value;
+			searchOptions[attribute.name] = attribute.value;
 		}
-		this.setState({ searchOptions: options })
+		this.setState({ searchOptions })
 	}
 
 	public validateSearch = () => {
-		const options = this.state.searchOptions;
-		const hasGenre = options.seed_genres ? true : false;
-		const hasArtist = options.seed_artists ? true : false;
-		return hasGenre || hasArtist;
+		const { searchOptions } = this.state;
+		return !!searchOptions.seed_genres || !!searchOptions.seed_artists;
 	}
 
 	public showSearch = () => {
 		if (!this.state.initiated) { return; }
 			return (
-				<div className='search-grid'>
-					<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
-					<GenreSearch visible={this.state.initiated} onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
-					<QueryAttributes onChange={this.attributesOnChange} />
+				<div>
+					<div className='search-grid'>
+						<ArtistSearchList visible={this.state.initiated} onSearch={this.getArtistIds} onError={this.onError} />
+						<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
+						<QueryAttributes onChange={this.attributesOnChange} />
+					</div>
+					{this.state.initiated && <button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>}
 				</div>
 			)
 	}
 
 	public showRecommendationResults = () => {
 		if (!this.state.recommendations ) { return; }
-		const recs = this.state.recommendations as SpotifyApi.RecommendationsFromSeedsResponse;
+		const recs = this.state.recommendations;
 		return (
-			<div className='recommendations-block'>
-				<h2 className='result-item'>Results</h2>
-				{recs.tracks.length > 0 && <button onClick={this.createPlaylist} className='result-item'>Create new Spotify playlist</button>}
+			<div>
+				<div className='recommendations-block'>
+					<h2 className='result-item'>Results</h2>
+					{recs.tracks.length > 0 && <button onClick={this.createPlaylist} className='result-item'>Create new Spotify playlist</button>}
 					{recs.tracks.map(t => (<a className='result-item' key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
+				</div>
+				{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
 			</div>
 		)
 	}
@@ -133,10 +137,7 @@ class Home extends React.Component<any, IState> {
 				<div className='outer-grid'>
 					{this.showSearch()}
 					{this.showRecommendationResults()}
-					{this.state.initiated && <button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>}
-					{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
 				</div>
-
 			</div>
 		);
 	}

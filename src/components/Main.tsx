@@ -8,7 +8,6 @@ const Main = () => (
 		<Switch>
 			<Route exact={true} path={`${process.env.REACT_APP_URI}callback`} component={Callback}/>
 			<Route path={process.env.REACT_APP_URI} component={Home}/>
-			
 		</Switch>
 	</main>
 )
