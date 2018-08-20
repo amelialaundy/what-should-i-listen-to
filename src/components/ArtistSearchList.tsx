@@ -1,7 +1,7 @@
 // src/components/search.tsx
 // tslint:disable:no-console
 import {Button} from '@material-ui/core'
-import {Add} from '@material-ui/icons'
+import Add from '@material-ui/icons/Add'
 
 import { debounce } from 'lodash'
 import * as React from 'react';

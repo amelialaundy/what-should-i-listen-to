@@ -58,12 +58,7 @@ pre code {
   text-align: left;
 }
 
-.genre {
-  grid-column: col 3/ span 2;
-  grid-row: row 1;
-  background-color: #444;
-  color: #fff;
-}
+
 
 .artist-genre {
   grid-column: col 1 / span 4;
@@ -97,7 +92,7 @@ pre code {
   grid-gap: 10%;
   grid-template-columns: 1fr 1fr;
 
-  background-color: #444;
+  /* background-color: #444; */
   color: #fff;
   display: grid;
   grid-column-gap: 2%;
@@ -133,11 +128,11 @@ pre code {
   color: rgb(201, 243, 192);
 }
 
-.search {
+/* .search {
   grid-column: col 4 / span 1;
   grid-row: row 3;
   background-color: #fff
-}
+} */
 
 .attributes  {
   grid-column: col 1 / span 4;
@@ -230,10 +225,16 @@ pre code {
     grid-column: col 1 / span 4 ;
     grid-row: 1;
   }
-
+/* 
   .genre {
     grid-column: col 1 / span 4 ;
     grid-row: 2;
+  } */
+  .genre {
+    grid-column: col 3/ span 2;
+    grid-row: row 1;
+    /* background-color: #444; */
+    color: #fff;
   }
 
   .attributes  {
