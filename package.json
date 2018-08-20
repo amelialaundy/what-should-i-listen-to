@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "http://amelialaundy.github.io/what-should-i-listen-to",
   "dependencies": {
+    "@material-ui/core": "^1.5.0",
+    "@material-ui/icons": "^2.0.3",
+    "@material-ui/lab": "^1.0.0-alpha.11",
     "@types/lodash.debounce": "^4.0.4",
     "@types/qs": "^6.5.1",
     "@types/react-router-dom": "^4.3.0",

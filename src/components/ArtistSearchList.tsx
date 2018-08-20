@@ -1,5 +1,8 @@
 // src/components/search.tsx
 // tslint:disable:no-console
+import {Button} from '@material-ui/core'
+import {Add} from '@material-ui/icons'
+
 import { debounce } from 'lodash'
 import * as React from 'react';
 
@@ -56,19 +59,22 @@ class ArtistSearchList extends React.Component<IProps, IState> {
 	public render() {
 		return (
 			<div className="type-container artist">
-				<h4>
-					Enter up to 5 artists:
-				</h4>
 				{this.state.artistList.map((x, i) => {
-					return (<ArtistSearchItem visible={true} 
+					return (<ArtistSearchItem showDelete={this.state.artistList.length > 1} 
 																		value={x.name} 
 																		removeArtist={this.removeArtistItem} 
 																		updateArtist={this.updateArtist} 
 																		id={x.id} 
 																		key={x.id}/> )
 				})}
-				<button disabled={this.state.artistList.length === 5} 
-								onClick={this.addNewArtistSearchItem}>add another</button>
+				<Button disabled={this.state.artistList.length === 5} 
+								onClick={this.addNewArtistSearchItem} 
+								variant="fab" 
+								color="primary" 
+								aria-label="Add"
+								mini={true} >
+					<Add />
+			</Button>
 			</div>
 		);
 	}

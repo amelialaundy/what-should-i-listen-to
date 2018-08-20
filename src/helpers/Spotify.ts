@@ -38,6 +38,19 @@ export class Spotify {
 		return playlist;
 	}
 
+	public async call<T1, T2>(func: (p: T2) => T1 , params: T2, errorHandler: (err: any) => never, errorMessage?: string): Promise<T1>
+	public async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 , params: T2, errorHandler: (err: any) => never, params2: T3, errorMessage?: string): Promise<T1>
+	public async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 , params: T2, errorHandler: (err: any) => never, params2: T3, errorMessage?: string): Promise<T1> {
+		const genericMessage = 'an error occurred';
+		try {
+			return await func(params, params2)
+	 } catch (e) {
+		 // tslint:disable-next-line:no-console
+		 console.log(`error calling ${func}: ${errorMessage || genericMessage}`);
+		 return errorHandler(e);
+	 }
+	}
+
 	private searchArtistByName = async (artist: string): Promise<SpotifyApi.ArtistObjectFull> => {
 		const results = (await this.client.searchArtists(artist, {}))
 		return results.artists.items[0];
