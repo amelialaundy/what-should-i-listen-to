@@ -51,6 +51,13 @@ pre code {
   
 }
 
+.playlist-block {
+  float: left;
+  grid-column: col 1 / span 3;
+  grid-row: row 2;
+  text-align: left;
+}
+
 .genre {
   grid-column: col 3/ span 2;
   grid-row: row 1;
@@ -72,6 +79,7 @@ pre code {
 .genre-form {
   float: left;
   font-weight: bold;
+  width: 80%;
 }
 
 .outer-grid {
@@ -196,7 +204,7 @@ pre code {
 
   padding: 8px 8px;
 
-  width: 50%;
+  width: 80%;
   margin: auto;
   font-weight: bold;
   font-size:14px
@@ -217,6 +225,29 @@ pre code {
     grid-column: col 1 / span 2;
     grid-row: row 2
   }
+
+  .artist {
+    grid-column: col 1 / span 4 ;
+    grid-row: 1;
+  }
+
+  .genre {
+    grid-column: col 1 / span 4 ;
+    grid-row: 2;
+  }
+
+  .attributes  {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .genre-form {
+    width: 90%;
+  }
+
+  .artistSearch {
+    width: 90%;
+  }
+
   body {
     width: 90%
   }
