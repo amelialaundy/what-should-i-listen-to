@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import '../App.css';
 
+import { Button } from '@material-ui/core';
 import { IAttributeChangeValue } from '../Attributes'
 import { Spotify } from '../helpers/Spotify'
 import ArtistSearchList from './ArtistSearchList';
@@ -103,7 +104,6 @@ class Home extends React.Component<any, IState> {
 	}
 
 	public showSearch = () => {
-		if (!this.state.initiated) { return; }
 			return (
 					<div className='search-grid'>
 						<div className='artist-genre'>
@@ -111,20 +111,26 @@ class Home extends React.Component<any, IState> {
 							<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 						</div>
 						<QueryAttributes onChange={this.attributesOnChange} />
+						<Button variant="outlined" className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>
 					</div>
 			)
 	}
 
 	public render() {
+		let display;
+		if 	(!this.state.initiated) {
+			display = (<a href={this.loginUrl}>Log in to Spotify</a>) 
+		} else {
+			display = 
+			(<div className='outer-grid'>
+				{this.showSearch()}
+				<RecommendationsList spotify={this.spotify} recommendations={this.state.recommendations} />
+			</div>
+		)}
 		return (
 			<div className="App">
-				{!this.state.initiated && <a href={this.loginUrl}>Log in to Spotify</a>}
-				<div className='outer-grid'>
-					{this.showSearch()}
-					{this.state.initiated && <button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>}
-					<RecommendationsList spotify={this.spotify} recommendations={this.state.recommendations}/>
-					
-				</div>
+				{this.state.initiated && <Button variant="outlined" className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>}
+				{display}
 			</div>
 		);
 	}

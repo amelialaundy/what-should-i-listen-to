@@ -122,19 +122,18 @@ pre code {
 .result-item {
   grid-column: col 1 / span 4;
   text-align: left;
+  color: rgb(201, 243, 192);
 }
 
 .search {
-  grid-column: col 1 / span 1;
-  grid-row: row 2;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 1fr;
+  grid-column: col 4 / span 1;
+  grid-row: row 3;
+  background-color: #fff
 }
 
 .attributes  {
   grid-column: col 1 / span 4;
-  grid-row: row 3;
+  grid-row: row 2;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(4, 1fr);
