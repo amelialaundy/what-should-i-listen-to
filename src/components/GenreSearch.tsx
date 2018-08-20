@@ -1,6 +1,6 @@
 // src/components/search.tsx
 
-import { Button, FormControl, FormHelperText, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, FormHelperText, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
 import * as React from 'react';
 interface IState {
 		genreToSearch: string;
@@ -26,15 +26,18 @@ class GenreSearch extends React.Component<IProps, IState> {
 				const searchInput = event.target.value;
 				// tslint:disable-next-line:no-console
 				console.log('update input', searchInput)
-				this.setState({genreToSearch: searchInput})
-				this.props.onSearch(searchInput);
+				if (!searchInput) {
+					this.removeGenre();
+				} else {
+					this.setState({genreToSearch: searchInput})
+					this.props.onSearch(searchInput);
+				}
 		}
-		public onSubmit = async (e: any) => {
-				e.preventDefault()
+
+		public removeGenre = async () => {
 				this.setState({genreToSearch: ''})
 				this.props.removeGenre();
 		}
-
 
 		public render() {
 				const options = this.props.genreList.map(gl => {
@@ -43,7 +46,7 @@ class GenreSearch extends React.Component<IProps, IState> {
 								value: gl
 						}
 				});
-				const className = 'my-custom-class'
+				const className = 'genre-form'
 				const defaultOption = this.state.genreToSearch ? {label: this.state.genreToSearch, value: this.state.genreToSearch} : {label: 'Select genre', value: ''};
 				return (
 						<div className="type-container genre">
@@ -66,7 +69,6 @@ class GenreSearch extends React.Component<IProps, IState> {
 									</Select>
 									<FormHelperText>Please select a genre</FormHelperText>
 								</FormControl>
-								<Button variant="outlined" color="primary" onClick={this.onSubmit}>Remove</Button>
 						</div>
 				);
 		}

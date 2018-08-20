@@ -46,7 +46,7 @@ pre code {
   /* float: left;
   width: 40%; */
   float: left;
- 
+  margin-top: 16px;
   width: 100%;
 }
 
@@ -65,6 +65,11 @@ pre code {
   grid-row-gap: 2%;
   grid-template-columns: repeat(4, [col] 23.5% ) ;
   grid-template-rows: repeat(1, [row] auto  );
+}
+
+.genre-form {
+  float: left;
+  font-weight: bold;
 }
 
 .outer-grid {
@@ -127,14 +132,12 @@ pre code {
   grid-template-columns: 1fr 1fr;
 }
 
-
-.attributes {
+.attributes  {
   grid-column: col 1 / span 4;
-  grid-row: row 3;
+  grid-row: row 2;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 1fr 1fr;
-
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .info-container {
@@ -142,7 +145,7 @@ pre code {
   grid-column-end: 2;
   grid-row-start: row1-start;
   grid-row-end: 3; */
-  width: 100%
+  margin: 5%
 }
 
 .attribute {

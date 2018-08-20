@@ -1,6 +1,8 @@
 // src/components/search.tsx
 // tslint:disable:no-console
 import {Button} from '@material-ui/core'
+import {Add} from '@material-ui/icons'
+
 import { debounce } from 'lodash'
 import * as React from 'react';
 
@@ -65,8 +67,14 @@ class ArtistSearchList extends React.Component<IProps, IState> {
 																		id={x.id} 
 																		key={x.id}/> )
 				})}
-				<Button variant="outlined" color="primary" disabled={this.state.artistList.length === 5} 
-								onClick={this.addNewArtistSearchItem}>add another</Button>
+				<Button disabled={this.state.artistList.length === 5} 
+								onClick={this.addNewArtistSearchItem} 
+								variant="fab" 
+								color="primary" 
+								aria-label="Add"
+								mini={true} >
+					<Add />
+			</Button>
 			</div>
 		);
 	}

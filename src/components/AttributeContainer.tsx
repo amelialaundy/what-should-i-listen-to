@@ -22,7 +22,8 @@ export class AttributeContainer extends React.Component<IProps, IState> {
 	}
 
 	public onChange = (e: any, value: number) => {
-		const valueAsOneDecimal = +value.toFixed(2);
+		// slider returns some numbers with multiple decimal places, round to one dp
+		const valueAsOneDecimal = Math.round(value * 1e2) / 1e2
 		this.setState({value: valueAsOneDecimal})
 		this.props.onChange({name: this.props.attribute.name, value: this.state.value})
 	}
