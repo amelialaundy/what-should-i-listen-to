@@ -6,20 +6,15 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
 	palette: {
-		primary: { main: '#c9f3c0' }, 
+		primary: { 
+			contrastText: 'rgba(0, 0, 0, 0.54)',
+			main: '#c9f3c0'
+		}, 
 		secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
 	},
 });
 
-// function Palette() {
-// 	return (
-// 		<MuiThemeProvider theme={theme}>
-// 			<Button color="primary">Primary</Button>
-//       <Button color="secondary">Secondary</Button>
-// 		</MuiThemeProvider>
-// 	);
-// }
-export type StyleType = 'button' | 'search';
+export type StyleType = 'button' | 'search' ;
 
 export const styles: StyleRulesCallback<StyleType> = (th: Theme) => ({
 	button: {
@@ -40,8 +35,9 @@ export const styles: StyleRulesCallback<StyleType> = (th: Theme) => ({
 		// tslint:disable-next-line:object-literal-sort-keys
 		border: 0,
 		borderRadius: 3,
-		color: 'rgba(0, 0, 0, 0.54)',
+		color: theme.palette.primary.contrastText,
 		height: 48,
 		padding: '0 30px',
 	},
+	
 });

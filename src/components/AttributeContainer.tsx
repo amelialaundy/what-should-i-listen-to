@@ -1,21 +1,30 @@
 // import { Typography } from '@material-ui/core';
+import { StyleRulesCallback, Theme, WithStyles, withStyles } from '@material-ui/core';
 import {Slider} from '@material-ui/lab'
 import * as React from 'react';
 import {IAttributeChangeValue, IQueryAttribute} from '../Attributes'
+import { theme } from '../helpers/Theme';
 
+type StyleType = 'font';
 
-interface IProps {
+export const styles: StyleRulesCallback<StyleType> = (th: Theme) => ({
+	font: {
+		color: theme.palette.primary.contrastText,
+		float: 'left',
+		margin: '10px'
+	}
+})
+
+interface IProps extends WithStyles<StyleType> {
 	attribute: IQueryAttribute;
 	onChange(attribute: IAttributeChangeValue): void;
 }
-
 
 interface IState {
 	value?: number;
 }
 
-
-export class AttributeContainer extends React.Component<IProps, IState> {
+class AttributeContainer extends React.Component<IProps, IState> {
 	constructor(props: IProps) {
 			super(props);
 			this.state = {};
@@ -33,10 +42,11 @@ export class AttributeContainer extends React.Component<IProps, IState> {
 		const defaultValue = this.state.value || attribute.min;
 		return (
 			<div key={attribute.name} className='info-container'>
-				<span className='attribute-name' data-tooltip={attribute.description}>{attribute.displayName} {defaultValue}/{attribute.max}</span>
+				<span className={this.props.classes.font} data-tooltip={attribute.description}>{attribute.displayName} {defaultValue}/{attribute.max}</span>
 				{/* <Typography id="label">{attribute.displayName}</Typography> */}
 				<Slider className='attribute-slider' aria-labelledby="label" value={defaultValue} min={attribute.min} max={attribute.max} step={attribute.step} onChange={this.onChange} />
 			</div>
 		)
 	}
 }
+export default withStyles(styles)<IProps>(AttributeContainer);

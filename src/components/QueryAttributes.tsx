@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IAttributeChangeValue, IQueryAttribute, MinDanceability, MinInstrumentalness, MinPopularity, MinSpeechiness } from '../Attributes'
-import { AttributeContainer } from './AttributeContainer';
+import AttributeContainer from './AttributeContainer';
+
 
 interface IProps {
 	onChange(attribute: IAttributeChangeValue): any;

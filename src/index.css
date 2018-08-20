@@ -164,13 +164,13 @@ pre code {
 .attribute-slider {
   float: left;
 }
-
+/* this is in ts now
 .attribute-name {
-  /* float: left;
-  width: 40%; */
+  float: left;
+  width: 40%;
   float: left;
   margin: 10px;
-}
+} */
 
 /* p.attribute-name + p.attribute-description {
     display: block;
