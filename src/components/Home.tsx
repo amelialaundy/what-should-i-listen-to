@@ -8,6 +8,7 @@ import { Spotify } from '../helpers/Spotify'
 import ArtistSearchList from './ArtistSearchList';
 import GenreSearch from './GenreSearch';
 import QueryAttributes from './QueryAttributes';
+import RecommendationsList from './RecommendationsList';
 
 export interface IState {
 	artistsIds: string[];
@@ -46,7 +47,7 @@ class Home extends React.Component<any, IState> {
 	// #region externalCalls
 	public getArtistIds = async (artistNames: string[]) => {
 		const errorMessage = 'error getting artists';
-		const artists = await this.call<Promise<SpotifyApi.ArtistObjectFull[]>, string[]>(this.spotify.searchArtists, artistNames, errorMessage);
+		const artists = await this.spotify.call<Promise<SpotifyApi.ArtistObjectFull[]>, string[]>(this.spotify.searchArtists, artistNames, this.onError,errorMessage);
 		
 		const artistsIds = artists.filter(a => !!a).map(r => r.id);
 		const opts = this.state.searchOptions;
@@ -55,11 +56,11 @@ class Home extends React.Component<any, IState> {
 	}
 
 	public getGenres = async () => {
-		const genres = await this.call<Promise<string[]>, void>(this.spotify.getGenres, undefined, 'error getting genres') as string[];
+		const genres = await this.spotify.call<Promise<string[]>, void>(this.spotify.getGenres,  undefined, this.onError, 'error getting genres') as string[];
 		this.setState({ genres })
 	}
 	public getRecommendations = async () => {
-		const recommendations = await this.call<Promise<SpotifyApi.RecommendationsFromSeedsResponse>, SpotifyApi.RecommendationsOptionsObject>(this.spotify.getRecommendations, this.state.searchOptions, 'error getting recommendations');
+		const recommendations = await this.spotify.call<Promise<SpotifyApi.RecommendationsFromSeedsResponse>, SpotifyApi.RecommendationsOptionsObject>(this.spotify.getRecommendations, this.state.searchOptions, this.onError, 'error getting recommendations');
 		this.setState({ recommendations, playlistLink: '' })
 	}
 
@@ -67,7 +68,7 @@ class Home extends React.Component<any, IState> {
 		const playlistName = 'test';
 		const recs = this.state.recommendations as SpotifyApi.RecommendationsFromSeedsResponse;
 		const playListContents = recs.tracks.map(r => r.uri);
-		const res = await this.call<Promise<SpotifyApi.CreatePlaylistResponse>,string, string[]>(this.spotify.createPlaylistAndAddTracks, playlistName, playListContents, 'error getting genres');
+		const res = await this.spotify.call<Promise<SpotifyApi.CreatePlaylistResponse>,string, string[]>(this.spotify.createPlaylistAndAddTracks, playlistName, this.onError, playListContents, 'error getting genres');
 		this.setState({playlistLink: res.uri});
 	}
 	// #endregion
@@ -114,20 +115,6 @@ class Home extends React.Component<any, IState> {
 			)
 	}
 
-	public showRecommendationResults = () => {
-		if (!this.state.recommendations ) { return; }
-		const recs = this.state.recommendations;
-		// turn this into its own component for rendering
-		// add an input for name of playlist when saving it to spotify
-		return (
-				<div className='recommendations-block'>
-					<h2 className='result-item'>Results</h2>
-					{recs.tracks.length > 0 && <button onClick={this.createPlaylist} className='result-item'>Create new Spotify playlist</button>}
-					{recs.tracks.map(t => (<a className='result-item' key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
-				</div>
-		)
-	}
-
 	public render() {
 		return (
 			<div className="App">
@@ -135,24 +122,11 @@ class Home extends React.Component<any, IState> {
 				<div className='outer-grid'>
 					{this.showSearch()}
 					{this.state.initiated && <button className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</button>}
-					{this.showRecommendationResults()}
-					{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
+					<RecommendationsList spotify={this.spotify} recommendations={this.state.recommendations}/>
+					
 				</div>
 			</div>
 		);
-	}
-
-	private async call<T1, T2>(func: (p: T2) => T1 , params: T2, errorMessage?: string): Promise<T1>
-	private async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 , params: T2, params2: T3, errorMessage?: string): Promise<T1>
-	private async call<T1, T2, T3>(func: (p: T2, p1: T3) => T1 , params: T2, params2: T3,errorMessage?: string): Promise<T1> {
-		const genericMessage = 'an error occurred';
-		try {
-			return await func(params, params2)
-	 } catch (e) {
-		 // tslint:disable-next-line:no-console
-		 console.log(`error calling ${func}: ${errorMessage || genericMessage}`);
-		 return this.onError(e);
-	 }
 	}
 
 	private onError = (e: any): never => {

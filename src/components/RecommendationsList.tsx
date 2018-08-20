@@ -32,7 +32,6 @@ class RecommendationsList extends React.Component <IProps, IState> {
 	public showRecommendationResults = () => {
 		const {recommendations} = this.props;
 		if (!recommendations ) { return null; }
-		// turn this into its own component for rendering
 		// add an input for name of playlist when saving it to spotify
 		return (
 				<div className='recommendations-block'>

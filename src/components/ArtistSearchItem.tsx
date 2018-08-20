@@ -42,10 +42,11 @@ class ArtistSearchItem extends React.Component<IProps, IState> {
 			<span className={'artist-item'}>
 				<TextField
 					className='artistSearch'
-					type="text" name="artistList"
+					type="text" 
+					name="artistList"
 					value={this.props.value || this.state.searchInput}
 					onChange={this.onChange}
-					placeholder='Artist' />
+					placeholder='Artist'/>
 				<Button mini={true} variant="fab" color="primary" aria-label="Delete"  onClick={this.remove}>
 					<Delete />
 				</Button>
