@@ -119,7 +119,7 @@ class Home extends React.Component<any, IState> {
 	public render() {
 		let display;
 		if 	(!this.state.initiated) {
-			display = (<a href={this.loginUrl}>Log in to Spotify</a>) 
+			display = (<Button variant="outlined" className='login'><a href={this.loginUrl}>Log in to Spotify</a></Button>) 
 		} else {
 			display = 
 			(<div className='outer-grid'>
