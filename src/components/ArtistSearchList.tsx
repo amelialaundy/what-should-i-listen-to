@@ -60,7 +60,7 @@ class ArtistSearchList extends React.Component<IProps, IState> {
 		return (
 			<div className="type-container artist">
 				{this.state.artistList.map((x, i) => {
-					return (<ArtistSearchItem visible={true} 
+					return (<ArtistSearchItem showDelete={this.state.artistList.length > 1} 
 																		value={x.name} 
 																		removeArtist={this.removeArtistItem} 
 																		updateArtist={this.updateArtist} 

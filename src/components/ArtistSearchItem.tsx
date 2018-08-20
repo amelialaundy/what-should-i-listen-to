@@ -13,7 +13,7 @@ interface IArtist {
 }
 
 interface IProps {
-	visible: boolean;
+	showDelete: boolean;
 	removeArtist: (id: number) => void;
 	updateArtist: (info: IArtist) => void;
 	id: number;
@@ -47,9 +47,9 @@ class ArtistSearchItem extends React.Component<IProps, IState> {
 					value={this.props.value || this.state.searchInput}
 					onChange={this.onChange}
 					placeholder='Artist'/>
-				<Button mini={true} variant="fab" color="primary" aria-label="Delete"  onClick={this.remove}>
+			{this.props.showDelete && <Button mini={true} variant="fab" color="primary" aria-label="Delete"  onClick={this.remove}>
 					<Delete />
-				</Button>
+				</Button>}
 			</span>)
 	}
 }
