@@ -8,7 +8,7 @@ set-env: &set-env
   command: |
     if [ "${CIRCLE_BRANCH}" == "master" ]; then
       export ENV="prod"
-    elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+    elif [ "${CIRCLE_BRANCH}" == "test" ]; then
       export ENV="test"
     else
       export ENV="dev"
@@ -37,7 +37,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-       - persist_to_workspace:
+      - persist_to_workspace:
           root: .
           paths: .
   deploy:
