@@ -211,6 +211,13 @@ pre code {
   margin: 10px auto;
 }
 
+.genre {
+  grid-column: col 3/ span 2;
+  grid-row: row 1;
+  /* background-color: #444; */
+  color: #fff;
+}
+
 @media screen and (max-width: 480px) {
   .search-grid {
     grid-column: col 1 / span 2;
@@ -225,17 +232,12 @@ pre code {
     grid-column: col 1 / span 4 ;
     grid-row: 1;
   }
-/* 
+
   .genre {
     grid-column: col 1 / span 4 ;
     grid-row: 2;
-  } */
-  .genre {
-    grid-column: col 3/ span 2;
-    grid-row: row 1;
-    /* background-color: #444; */
-    color: #fff;
   }
+
 
   .attributes  {
     grid-template-columns: repeat(1, 1fr);
