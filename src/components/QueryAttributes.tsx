@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IAttributeChangeValue, IQueryAttribute, MinDanceability, MinInstrumentalness, MinPopularity, MinSpeechiness } from '../Attributes'
-import { AttributeContainer } from './AttributeContainer';
+import AttributeContainer from './AttributeContainer';
+
 
 interface IProps {
 	onChange(attribute: IAttributeChangeValue): any;
@@ -19,8 +20,10 @@ class QueryAttributes extends React.Component<IProps, IState> {
 	}
 
 	public getAttribute = (attribute: IQueryAttribute) => {
+		// tslint:disable-next-line:no-console
+		console.log('AttributeContainer.propTypes')
 		return (
-			<AttributeContainer key={attribute.name} attribute={attribute} onChange={this.props.onChange} />
+			<AttributeContainer  onChange={this.props.onChange} key={attribute.name} attribute={attribute}/>
 		)
 	}
 	public render() {

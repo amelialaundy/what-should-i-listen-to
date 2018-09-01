@@ -12,7 +12,6 @@ interface IState {
 }
 
 class RecommendationsList extends React.Component <IProps, IState> {
-
 	constructor(props: IProps) {
 		super(props);
 		this.state = {playlistLink: '', playlistName: ''};

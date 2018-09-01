@@ -2,8 +2,9 @@ import * as React from 'react';
 // import * as SpotifyWebApi from 'spotify-web-api-js'
 
 import '../App.css';
+import {styles, StyleType, theme} from '../helpers/Theme';
 
-import { Button } from '@material-ui/core';
+import { Button, MuiThemeProvider, WithStyles, withStyles } from '@material-ui/core';
 import { IAttributeChangeValue } from '../Attributes'
 import { Spotify } from '../helpers/Spotify'
 import ArtistSearchList from './ArtistSearchList';
@@ -22,7 +23,10 @@ export interface IState {
 	playlistLink: string;
 }
 
-class Home extends React.Component<any, IState> {
+export interface IProps extends WithStyles<StyleType> {
+}
+
+class Home extends React.Component<IProps, IState> {
 	private spotify: Spotify;
 	private uri: string = (`?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_HOST}/callback&scope=user-read-private user-read-email playlist-modify-private&response_type=token&state=123`);
 	private loginUrl: string = `https://accounts.spotify.com/authorize${this.uri}`
@@ -111,7 +115,7 @@ class Home extends React.Component<any, IState> {
 							<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 						</div>
 						<QueryAttributes onChange={this.attributesOnChange} />
-						<Button variant="outlined" className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>
+						<Button color="primary" variant="outlined" className={this.props.classes.search} onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>
 					</div>
 			)
 	}
@@ -128,10 +132,11 @@ class Home extends React.Component<any, IState> {
 			</div>
 		)}
 		return (
-			<div className="App">
-				{this.state.initiated && <Button variant="outlined" className='search' onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>}
-				{display}
-			</div>
+			<MuiThemeProvider theme={theme}>
+				<div className="App">
+					{display}
+				</div>
+			</MuiThemeProvider>
 		);
 	}
 
@@ -144,4 +149,4 @@ class Home extends React.Component<any, IState> {
 
 }
 
-export default Home;
+export default withStyles(styles)<IProps>(Home);
