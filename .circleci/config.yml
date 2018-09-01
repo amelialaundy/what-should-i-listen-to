@@ -51,7 +51,7 @@ jobs:
           command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
       - run:
           name: config-global
-          command: git config --global -l
+          command: mkdir ~/.gitconfig/ && git config --global -l
       - run:
           name: config-global-email
           command: git config --global user.email circleci@circleci
