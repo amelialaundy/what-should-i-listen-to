@@ -50,7 +50,7 @@ jobs:
           paths: .
   deploy:
     environment: 
-      REACT_APP_VERSION: $(node -p -e "require('./package.json').version")
+      REACT_APP_VERSION:  $(eval echo ${(node -p -e "require('./package.json').version")})
     <<: *defaults
     steps:
       - attach_workspace:
