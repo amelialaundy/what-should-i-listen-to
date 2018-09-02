@@ -51,8 +51,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: *set-env
       - run: *set-app-version
+      - run: *set-env
       - run:
           name: Avoid hosts unknown for github
           command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
