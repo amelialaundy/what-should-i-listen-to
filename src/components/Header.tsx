@@ -8,7 +8,7 @@ class Header extends React.Component {
 			return (
 				<header className="App-header">
 				<h1 className="App-title">What should I listen to?</h1>
-				<p> v: {process.env.APP_VERSION}</p>
+				<p> v: {process.env.REACT_APP_VERSION}</p>
 				<p> v: {process.env.npm_package_version}</p>
 			</header>)
 		}

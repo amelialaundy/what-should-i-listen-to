@@ -19,8 +19,8 @@ set-env: &set-env
 set-app-version: &set-app-version
     name: set-app-version
     command: |
-      export APP_VERSION=$(node -p -e "require('./package.json').version")
-      echo $APP_VERSION
+      export REACT_APP_VERSION=$(node -p -e "require('./package.json').version")
+      echo $REACT_APP_VERSION
 
 version: 2
 jobs:
