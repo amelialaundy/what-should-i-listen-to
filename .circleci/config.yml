@@ -55,7 +55,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: echo 'export REACT_APP_VERSION=$(eval echo ${(node -p -e "require('./package.json').version")})' >> envrc
+      - run: echo 'export REACT_APP_VERSION=(eval echo ${$(node -p -e "require('./package.json').version")})' >> envrc
       - run: *set-env
       - run:
           name: Avoid hosts unknown for github
