@@ -18,7 +18,9 @@ set-env: &set-env
 
 set-app-version: &set-app-version
     name: set-app-version
-    command: export APP_VERSION=$(node -p -e "require('./package.json').version")
+    command: |
+      export APP_VERSION=$(node -p -e "require('./package.json').version")
+      echo $APP_VERSION
 
 version: 2
 jobs:
@@ -47,11 +49,12 @@ jobs:
           root: .
           paths: .
   deploy:
+    environment: 
+      APP_VERSION: $(node -p -e "require('./package.json').version")
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: *set-app-version
       - run: *set-env
       - run:
           name: Avoid hosts unknown for github
