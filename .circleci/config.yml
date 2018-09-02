@@ -49,9 +49,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run:
-          name: testing-vars
-          command: echo $REACT_APP_URI
+      - run: *set-env
       - run:
           name: Avoid hosts unknown for github
           command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
