@@ -13,6 +13,7 @@ set-env: &set-env
     else
       export ENV="dev"
     fi
+    export REACT_APP_VERSION=$CIRCLE_BUILD_NUM
     echo $ENV
 
 version: 2
