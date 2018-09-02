@@ -18,7 +18,7 @@ set-env: &set-env
 
 set-app-version: &set-app-version
     name: set-app-version
-    command: APP_VERSION=$(node -p -e \"require('./package.json').version\")
+    command: export APP_V=(node -p "require('./package.json').version")
 
 version: 2
 jobs:
