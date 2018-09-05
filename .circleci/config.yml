@@ -7,20 +7,19 @@ set-env: &set-env
   name: set-env
   command: |
     if [ "${CIRCLE_BRANCH}" == "master" ]; then
-      export ENV="prod"
-    elif [ "${CIRCLE_BRANCH}" == "test" ]; then
-      export ENV="test"
+      echo 'export ENV=prod' >> $BASH_ENV
+    elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+      echo 'export ENV=test' >> $BASH_ENV
     else
-      export ENV="dev"
+      echo 'export ENV=test' >> $BASH_ENV
     fi
-    echo $APP_VERSION
     echo $ENV
 
-set-app-version: &set-app-version
-    name: set-app-version
-    command: |
-      export REACT_APP_VERSION=$(node -p -e "require('./package.json').version")
-      echo $REACT_APP_VERSION
+# set-app-version: &set-app-version
+#     name: set-app-version
+#     command: |
+#       export REACT_APP_VERSION=$(node -p -e "require('./package.json').version")
+#       echo $REACT_APP_VERSION
 
 version: 2
 jobs:
@@ -55,7 +54,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: echo 'export REACT_APP_VERSION=$(echo "${$(node -p -e "require('./package.json').version")}")' >> envrc
+      - run: echo 'export REACT_APP_VERSION=$(echo "${$(node -p -e "require('./package.json').version")}")' >> $BASH_ENV
+      - run: echo $REACT_APP_VERSION
       - run: *set-env
       - run:
           name: Avoid hosts unknown for github
