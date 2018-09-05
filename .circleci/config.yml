@@ -48,8 +48,6 @@ jobs:
           root: .
           paths: .
   deploy:
-    environment:
-      - BASH_ENV: envrc
     <<: *defaults
     steps:
       - attach_workspace:
