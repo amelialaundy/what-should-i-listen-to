@@ -30,6 +30,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/repo
+      - run: echo 'export REACT_APP_VERSION=$(node -p -e "require('./package.json').version")' >> $BASH_ENV
       # Download and cache dependencies
       - restore_cache:
           keys:
