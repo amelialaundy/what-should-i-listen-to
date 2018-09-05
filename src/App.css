@@ -23,6 +23,10 @@
 .App-intro {
   font-size: large;
 }
+.app-version {
+  float: left;
+  margin-top: 0;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
