@@ -25,7 +25,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build --message ' [ci skip]'"
+    "deploy": "gh-pages -d build --message '[ci skip]'"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
