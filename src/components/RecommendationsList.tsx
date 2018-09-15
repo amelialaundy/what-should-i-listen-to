@@ -1,11 +1,13 @@
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, WithStyles, withStyles } from '@material-ui/core'
 import * as React from "react";
 import { Spotify } from "../helpers/Spotify";
+import {styles, StyleType} from '../helpers/Theme';
 
-interface IProps {
+interface IProps extends WithStyles<StyleType> {
 	recommendations?: SpotifyApi.RecommendationsFromSeedsResponse;
 	spotify: Spotify;
 }
+
 interface IState {
 	playlistLink: string;
 	playlistName: string;
@@ -43,7 +45,7 @@ class RecommendationsList extends React.Component <IProps, IState> {
 					value={this.state.playlistName }
 					onChange={this.onChange}
 					placeholder='Playlist name'/>
-				<Button variant="outlined" disabled={!this.state.playlistName} onClick={this.createPlaylist} className='create-playlist'>Create new playlist</Button>
+				<Button color="secondary" variant="outlined" className={this.props.classes.shadowButton} disabled={!this.state.playlistName} onClick={this.createPlaylist} >Create new playlist</Button>
 				{this.state.playlistLink && <Button variant="outlined"  className='open-playlist'><a href={this.state.playlistLink}>open your playlist!</a></Button>}
 			</div>
 		)
@@ -57,7 +59,8 @@ class RecommendationsList extends React.Component <IProps, IState> {
 					<h2 className='result-item'>Results</h2>
 					{recommendations.tracks.length === 0 && <h3>No tracks found try using less search attributes</h3>}
 					{recommendations.tracks.length > 0 && this.getButton()}
-					{recommendations.tracks.map(t => (<a className='result-item' key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
+					{/* className={this.props.classes.font} */}
+					{recommendations.tracks.map(t => (<a className='result-item'  key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
 					{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
 				</div>
 		)
@@ -67,5 +70,4 @@ class RecommendationsList extends React.Component <IProps, IState> {
 		return this.showRecommendationResults();
 	}
 }
-
-export default RecommendationsList;
+export default withStyles(styles)<IProps>(RecommendationsList);

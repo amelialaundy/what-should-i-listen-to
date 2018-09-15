@@ -8,13 +8,13 @@ export const theme = createMuiTheme({
 	palette: {
 		primary: { 
 			contrastText: 'rgba(0, 0, 0, 0.54)',
-			main: '#c9f3c0'
+			main: '#11cb5f'
 		}, 
-		secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+		secondary: { main: '#c9f3c0' }, // This is just green.A700 as hex.
 	},
 });
 
-export type StyleType = 'button' | 'search' ;
+export type StyleType = 'shadowButton' | 'font' | 'button' | 'oldButton2' ;
 
 export const styles: StyleRulesCallback<StyleType> = (th: Theme) => ({
 	button: {
@@ -26,7 +26,21 @@ export const styles: StyleRulesCallback<StyleType> = (th: Theme) => ({
 		height: 48,
 		padding: '0 30px',
 	},
-	search: {
+	font: {
+		color: theme.palette.primary.contrastText,
+		float: 'left',
+		margin: '10px'
+	},
+	oldButton2: {
+		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+		border: 0,
+		borderRadius: 3,
+		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+		color: 'white',
+		height: 48,
+		padding: '0 30px',
+	},
+	shadowButton: {
 		background: theme.palette.secondary.light,
 		backgroundColor: theme.palette.secondary.main,
 		boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
@@ -38,6 +52,5 @@ export const styles: StyleRulesCallback<StyleType> = (th: Theme) => ({
 		color: theme.palette.primary.contrastText,
 		height: 48,
 		padding: '0 30px',
-	},
-	
+	}
 });

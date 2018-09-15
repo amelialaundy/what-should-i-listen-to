@@ -69,13 +69,6 @@ class Home extends React.Component<IProps, IState> {
 		this.setState({ recommendations, playlistLink: '' })
 	}
 
-	public createPlaylist = async () => {
-		const playlistName = 'test';
-		const recs = this.state.recommendations as SpotifyApi.RecommendationsFromSeedsResponse;
-		const playListContents = recs.tracks.map(r => r.uri);
-		const res = await this.spotify.call<Promise<SpotifyApi.CreatePlaylistResponse>,string, string[]>(this.spotify.createPlaylistAndAddTracks, playlistName, this.onError, playListContents, 'error getting genres');
-		this.setState({playlistLink: res.uri});
-	}
 	// #endregion
 
 	public saveGenre = (genre: string) => {
@@ -115,7 +108,7 @@ class Home extends React.Component<IProps, IState> {
 							<GenreSearch  onSearch={this.saveGenre} removeGenre={this.removeGenre} genreList={this.state.genres as string[]} onError={this.onError} />
 						</div>
 						<QueryAttributes onChange={this.attributesOnChange} />
-						<Button color="primary" variant="outlined" className={this.props.classes.search} onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>
+						<Button color="secondary" variant="outlined" className={this.props.classes.shadowButton} onClick={this.getRecommendations} disabled={!this.validateSearch()}>recommend!</Button>
 					</div>
 			)
 	}
