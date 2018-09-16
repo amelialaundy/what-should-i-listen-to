@@ -4,8 +4,6 @@ import Callback from './Callback';
 import Home from './Home'
 
 const Main = () => {
-	// tslint:disable-next-line:no-console
-	console.log('process.env.REACT_APP_URI', process.env.REACT_APP_URI)
 	return (
 	<main>
 		<Switch>

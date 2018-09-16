@@ -2,8 +2,6 @@ import * as React from 'react';
 
 class Header extends React.Component {
 		public render() {
-			// tslint:disable-next-line:no-console
-			console.log('process.env', process.env)
 			return (
 				<header className="App-header">
 					<p className="app-version"> v: {process.env.REACT_APP_VERSION  || process.env.npm_package_version}</p>

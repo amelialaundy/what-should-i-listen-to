@@ -33,8 +33,8 @@ class AttributeContainer extends React.Component<IProps, IState> {
 	public onChange = (e: any, value: number) => {
 		// slider returns some numbers with multiple decimal places, round to one dp
 		const valueAsOneDecimal = Math.round(value * 1e2) / 1e2
+		this.props.onChange({name: this.props.attribute.name, value: valueAsOneDecimal})
 		this.setState({value: valueAsOneDecimal})
-		this.props.onChange({name: this.props.attribute.name, value: this.state.value})
 	}
 
 	public render() {
@@ -44,7 +44,7 @@ class AttributeContainer extends React.Component<IProps, IState> {
 			<div key={attribute.name} className='info-container'>
 				<span className={this.props.classes.font} data-tooltip={attribute.description}>{attribute.displayName} {defaultValue}/{attribute.max}</span>
 				{/* <Typography id="label">{attribute.displayName}</Typography> */}
-				<Slider className='attribute-slider' aria-labelledby="label" value={defaultValue} min={attribute.min} max={attribute.max} step={attribute.step} onChange={this.onChange} />
+				<Slider className='attribute-slider' aria-labelledby="label" value={defaultValue} min={undefined} max={attribute.max} step={attribute.step} onChange={this.onChange} />
 			</div>
 		)
 	}

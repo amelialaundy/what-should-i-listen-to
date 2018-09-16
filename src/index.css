@@ -115,13 +115,18 @@ pre code {
   grid-template-columns: repeat(4, [col] 23.5% ) ;
   grid-template-rows: repeat(6, [row] auto  );
   height: 500px;
-  padding: 5%
 }
 
 .result-item {
   grid-column: col 1 / span 4;
   text-align: left;
   color: #11cb5f;
+}
+
+.search-options {
+  margin: 0;
+  grid-column: col 1 / span 4;
+  text-align: left;
 }
 
 /* .search {

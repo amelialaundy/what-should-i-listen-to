@@ -1,5 +1,4 @@
 // src/components/search.tsx
-// tslint:disable:no-console
 import {Button} from '@material-ui/core'
 import Add from '@material-ui/icons/Add'
 
@@ -17,7 +16,6 @@ interface IState {
 }
 
 interface IProps {
-	visible: boolean;
 	onSearch: (artists: string[]) => void;
 	onError: (e: any) => void;
 }
@@ -42,10 +40,7 @@ class ArtistSearchList extends React.Component<IProps, IState> {
 	}
 
 	public removeArtistItem = (id: number) =>{
-		console.log('remove artists', id)
 		const newList = this.state.artistList.filter((a) => id !== a.id)
-		console.log('list without artist', newList)
-
 		this.setState({ artistList: newList });
 		this.props.onSearch(newList.filter(l => l.name !== '').map(i => i.name));
 	}

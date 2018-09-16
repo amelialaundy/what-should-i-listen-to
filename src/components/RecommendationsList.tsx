@@ -2,10 +2,12 @@ import { Button, TextField, WithStyles, withStyles } from '@material-ui/core'
 import * as React from "react";
 import { Spotify } from "../helpers/Spotify";
 import {styles, StyleType} from '../helpers/Theme';
+import { ISearchState } from '../Interfaces/ISearchState'
 
 interface IProps extends WithStyles<StyleType> {
 	recommendations?: SpotifyApi.RecommendationsFromSeedsResponse;
 	spotify: Spotify;
+	searchState: ISearchState;
 }
 
 interface IState {
@@ -51,14 +53,23 @@ class RecommendationsList extends React.Component <IProps, IState> {
 		)
 	}
 	public showRecommendationResults = () => {
-		const {recommendations} = this.props;
+		const { recommendations } = this.props;
 		if (!recommendations ) { return null; }
+		const { searchState } = this.props;
 		// add an input for name of playlist when saving it to spotify
 		return (
 				<div className='recommendations-block'>
 					<h2 className='result-item'>Results</h2>
 					{recommendations.tracks.length === 0 && <h3>No tracks found try using less search attributes</h3>}
 					{recommendations.tracks.length > 0 && this.getButton()}
+					<p className="search-options">Current search options:</p>
+					{/* only update these if recommend button has been hit */}
+					<p className="search-options">Artists: {searchState.artists.map(a => a.name).join(', ')}</p>
+					<p className="search-options">Genre: {searchState.genre}</p>
+					<p className="search-options">Danceability: {searchState.min_danceability}/1</p>
+					<p className="search-options">Instrumentalness: {searchState.min_instrumentalness}/1</p>
+					<p className="search-options">Popularity: {searchState.min_popularity}/100</p>
+					<p className="search-options">Speechiness: {searchState.min_speechiness}/1</p>
 					{/* className={this.props.classes.font} */}
 					{recommendations.tracks.map(t => (<a className='result-item'  key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
 					{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
