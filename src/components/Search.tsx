@@ -128,7 +128,7 @@ class Search extends React.Component<IProps,IState> {
 					className={this.props.classes.shadowButton}
 					onClick={this.getRecommendations}
 					disabled={!this.validateSearch()}>
-					recommend!
+					search
 			</Button>
 			</div>
 		)
