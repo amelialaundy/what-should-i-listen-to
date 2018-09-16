@@ -52,25 +52,30 @@ class RecommendationsList extends React.Component <IProps, IState> {
 			</div>
 		)
 	}
+
+	public formatSearchInput = () => {
+		const { searchState } = this.props;
+		return (
+			<p className="search-options">
+				[<b> Artists:</b> {searchState.artists.map(a => a.name).join(', ')} ]
+				[<b> Genre:</b> {searchState.genre} ]
+				{searchState.min_danceability && <> [<b> Danceability:</b> {searchState.min_danceability}/1]</>}
+				{searchState.min_instrumentalness && <> [<b> Instrumentalness:</b> {searchState.min_instrumentalness}/1]</>}
+				{searchState.min_popularity && <> [<b> Popularity:</b> {searchState.min_popularity}/100]</>}
+				{searchState.min_speechiness && <> [<b> Speechiness:</b> {searchState.min_speechiness}/1]</>}
+			</p>
+		)
+	}
 	public showRecommendationResults = () => {
 		const { recommendations } = this.props;
 		if (!recommendations ) { return null; }
-		const { searchState } = this.props;
-		// add an input for name of playlist when saving it to spotify
 		return (
 				<div className='recommendations-block'>
 					<h2 className='result-item'>Results</h2>
 					{recommendations.tracks.length === 0 && <h3>No tracks found try using less search attributes</h3>}
 					{recommendations.tracks.length > 0 && this.getButton()}
 					<p className="search-options">Current search options:</p>
-					{/* only update these if recommend button has been hit */}
-					<p className="search-options">Artists: {searchState.artists.map(a => a.name).join(', ')}</p>
-					<p className="search-options">Genre: {searchState.genre}</p>
-					<p className="search-options">Danceability: {searchState.min_danceability}/1</p>
-					<p className="search-options">Instrumentalness: {searchState.min_instrumentalness}/1</p>
-					<p className="search-options">Popularity: {searchState.min_popularity}/100</p>
-					<p className="search-options">Speechiness: {searchState.min_speechiness}/1</p>
-					{/* className={this.props.classes.font} */}
+					{this.formatSearchInput()}
 					{recommendations.tracks.map(t => (<a className='result-item'  key={t.id} href={t.uri}> 🎵 Song: {t.name} by: {t.artists.map(a => a.name).join(' and ')}</a>))}
 					{this.state.playlistLink && <a href={this.state.playlistLink}>open your playlist!</a>}
 				</div>

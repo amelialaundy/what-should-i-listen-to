@@ -16,7 +16,6 @@ export interface IState {
 	initiated: boolean;
 	token?: string;
 	recommendations?: SpotifyApi.RecommendationsFromSeedsResponse;
-	// searchOptions: SpotifyApi.RecommendationsOptionsObject;
 	searchState: ISearchState;
 }
 
