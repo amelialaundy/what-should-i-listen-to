@@ -13,13 +13,17 @@ class CallbackDisplay extends React.Component<RouteComponentProps<any>, any> {
 	}
 	
 	public copyToClipboard = () => {
-		if (!this.textArea) { return; }
-		this.textArea.select();
-		document.execCommand('copy');
-		// This is just personal preference.
-		// I prefer to not show the the whole text area selected.
-		this.textArea.focus();
-		this.setState({ copySuccess: 'Copied!' });
+		if (!navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+			if (!this.textArea) { return; }
+			this.textArea.select();
+			document.execCommand('copy');
+			// This is just personal preference.
+			// I prefer to not show the the whole text area selected.
+			this.textArea.focus();
+			this.setState({ copySuccess: 'Copied!' });
+		} else {
+			this.iosCopyToClipboard();
+		}
 	};
 	
 	// tslint:disable-next-line:no-empty
@@ -66,7 +70,7 @@ class CallbackDisplay extends React.Component<RouteComponentProps<any>, any> {
 						onChange={this.doNothing}
 					/>
 				</form>
-				<button onClick={this.iosCopyToClipboard}>Copy</button> 
+				<button onClick={this.copyToClipboard}>Copy</button> 
 				{this.state.copySuccess}
 		</div>
 		)
