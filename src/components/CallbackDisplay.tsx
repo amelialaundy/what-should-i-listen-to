@@ -22,6 +22,33 @@ class CallbackDisplay extends React.Component<RouteComponentProps<any>, any> {
 		this.setState({ copySuccess: 'Copied!' });
 	};
 	
+	// tslint:disable-next-line:no-empty
+	public doNothing = () => {
+		
+	}
+	public iosCopyToClipboard = () => {
+		if (!this.textArea) { return }
+		const oldContentEditable = this.textArea.contentEditable;
+		const oldReadOnly = this.textArea.readOnly;
+		const	range = document.createRange();
+
+		this.textArea.contentEditable = "true";
+		this.textArea.readOnly = false;
+		range.selectNodeContents(this.textArea);
+
+		const s = window.getSelection();
+		s.removeAllRanges();
+		s.addRange(range);
+
+		this.textArea.setSelectionRange(0, 999999); // A big number, to cover anything that could be inside the element.
+
+		this.textArea.contentEditable = oldContentEditable;
+		this.textArea.readOnly = oldReadOnly;
+
+		document.execCommand('copy');
+		this.setState({ copySuccess: 'Copied!' });
+}
+	
 	public render() {
 		const q = this.props.location.search;
 		// tslint:disable-next-line:no-console
@@ -32,11 +59,14 @@ class CallbackDisplay extends React.Component<RouteComponentProps<any>, any> {
 			<div>
 				<form>
 					<textarea
+					contentEditable={true}
+					readOnly={false}
 						ref={(textarea) => this.textArea = textarea}
-						defaultValue={this.code}
+						value={this.code}
+						onChange={this.doNothing}
 					/>
 				</form>
-				<button onClick={this.copyToClipboard}>Copy</button> 
+				<button onClick={this.iosCopyToClipboard}>Copy</button> 
 				{this.state.copySuccess}
 		</div>
 		)
